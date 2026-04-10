@@ -193,20 +193,20 @@ const HeroSection = () => {
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(90deg, hsl(var(--background) / 0.78) 0%, hsl(var(--background) / 0.42) 32%, hsl(var(--background) / 0.16) 58%, hsl(var(--background) / 0.32) 100%)",
+                "linear-gradient(90deg, hsl(var(--background) / 0.88) 0%, hsl(var(--background) / 0.65) 28%, hsl(var(--background) / 0.15) 55%, transparent 100%)",
             }}
           />
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(180deg, hsl(var(--background) / 0.08) 0%, transparent 40%, hsl(var(--background) / 0.5) 100%)",
+                "linear-gradient(180deg, hsl(var(--background) / 0.3) 0%, transparent 30%, transparent 60%, hsl(var(--background) / 0.7) 100%)",
             }}
           />
         </div>
 
-        <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-center px-6 md:px-16 lg:px-24">
-          <div className="max-w-3xl">
+        <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pb-28 md:px-16 md:pb-32 lg:px-24 lg:pb-36">
+          <div className="max-w-2xl">
             <div className="mb-5 md:mb-6">
               {headlineLines.map((line, index) => (
                 <span
