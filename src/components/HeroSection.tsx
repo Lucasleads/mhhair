@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { Check, Play } from "lucide-react";
-import productAlecrim from "@/assets/product-alecrim.jpg";
+
 
 const quickSeals = ["Frete Grátis", "100% Puro", "Não Entope a Máquina"];
 
