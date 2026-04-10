@@ -1,5 +1,8 @@
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const frameCount = 144;
 const frameSources = Array.from(
@@ -134,34 +137,85 @@ const HeroSection = () => {
 
     const validHeadlineEls = headlineRefs.current.filter(Boolean) as HTMLSpanElement[];
 
+    const allAnimatedEls = [
+      ...validHeadlineEls,
+      subtitleRef.current!,
+      ctaRef.current!,
+      paginationRef.current!,
+      scrollIndicatorRef.current!,
+    ];
+
+    // Set initial state
+    gsap.set(allAnimatedEls, { willChange: "transform, opacity, filter" });
+
     const introTimeline = gsap.timeline({ defaults: { ease: "power3.out" } });
 
     introTimeline
       .from(validHeadlineEls, {
-        y: 72,
+        y: 60,
         opacity: 0,
+        filter: "blur(12px)",
         duration: 1,
         stagger: 0.12,
       })
       .from(
         subtitleRef.current!,
-        { y: 28, opacity: 0, duration: 0.8 },
+        { y: 24, opacity: 0, filter: "blur(8px)", duration: 0.8 },
         "-=0.45",
       )
       .from(
         ctaRef.current!,
-        { y: 20, opacity: 0, duration: 0.7 },
+        { y: 18, opacity: 0, filter: "blur(8px)", duration: 0.7 },
         "-=0.35",
       )
       .from(
         paginationRef.current!,
-        { x: 18, opacity: 0, duration: 0.7 },
+        { x: 18, opacity: 0, filter: "blur(6px)", duration: 0.7 },
         "-=0.25",
       )
       .from(
         scrollIndicatorRef.current!,
-        { opacity: 0, duration: 0.8 },
+        { opacity: 0, filter: "blur(6px)", duration: 0.8 },
         "-=0.2",
+      );
+
+    // Exit animation on scroll
+    const exitTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: section,
+        start: "top top",
+        end: "25% top",
+        scrub: 0.6,
+      },
+    });
+
+    exitTimeline
+      .to(validHeadlineEls, {
+        y: -40,
+        opacity: 0,
+        filter: "blur(12px)",
+        stagger: 0.03,
+        ease: "power2.in",
+      })
+      .to(
+        subtitleRef.current!,
+        { y: -30, opacity: 0, filter: "blur(8px)", ease: "power2.in" },
+        "<0.05",
+      )
+      .to(
+        ctaRef.current!,
+        { y: -20, opacity: 0, filter: "blur(8px)", ease: "power2.in" },
+        "<0.05",
+      )
+      .to(
+        paginationRef.current!,
+        { x: 18, opacity: 0, filter: "blur(6px)", ease: "power2.in" },
+        "<0.05",
+      )
+      .to(
+        scrollIndicatorRef.current!,
+        { opacity: 0, filter: "blur(6px)", ease: "power2.in" },
+        "<",
       );
 
     return () => {
@@ -178,9 +232,12 @@ const HeroSection = () => {
 
       try {
         introTimeline.revert();
+        exitTimeline.revert();
       } catch {
         introTimeline.kill();
+        exitTimeline.kill();
       }
+      ScrollTrigger.getAll().forEach((st) => st.kill());
     };
   }, []);
 
