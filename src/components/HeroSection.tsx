@@ -214,7 +214,7 @@ const HeroSection = () => {
                   ref={(element) => {
                     headlineRefs.current[index] = element;
                   }}
-                  className={`block font-heading text-3xl font-bold leading-[1.02] tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl ${
+                  className={`block font-heading text-2xl font-bold leading-[0.95] tracking-tight sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl ${
                     line.outline ? "text-transparent" : "text-foreground"
                   }`}
                   style={
