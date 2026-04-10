@@ -66,7 +66,8 @@ const HeroSection = () => {
       } else {
         drawWidth = viewportWidth;
         drawHeight = drawWidth / imageRatio;
-        offsetY = (viewportHeight - drawHeight) / 2;
+        // Bias toward showing the upper-center of the image (30% from top instead of 50%)
+        offsetY = (viewportHeight - drawHeight) * 0.3;
       }
 
       context.clearRect(0, 0, viewportWidth, viewportHeight);
