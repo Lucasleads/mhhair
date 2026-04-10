@@ -8,7 +8,7 @@ const HeroSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const videoWrapRef = useRef<HTMLDivElement>(null);
-  const productRef = useRef<HTMLDivElement>(null);
+  
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -16,7 +16,7 @@ const HeroSection = () => {
     const ctx = gsap.context(() => {
       gsap.from(textRef.current, { x: -60, opacity: 0, duration: 1, ease: "power3.out", delay: 0.2 });
       gsap.from(videoWrapRef.current, { scale: 0.9, opacity: 0, rotation: 2, duration: 1, ease: "power3.out", delay: 0.4 });
-      gsap.from(productRef.current, { scale: 0.85, opacity: 0, y: 40, duration: 1.1, ease: "power3.out", delay: 0.6 });
+      
     }, sectionRef);
     return () => ctx.revert();
   }, []);
@@ -94,23 +94,6 @@ const HeroSection = () => {
               </div>
             </div>
 
-            {/* Product image with glossy effect */}
-            <div ref={productRef} className="relative w-48 md:w-56 lg:w-64 lg:absolute lg:-bottom-8 lg:-right-8 xl:-right-12 z-30">
-              <div className="product-glossy rounded-2xl overflow-hidden">
-                <img
-                  src="/images/product-luxury.jpg"
-                  alt="Frasco MH AIR 1L — Essência profissional de luxo"
-                  className="w-full h-auto drop-shadow-2xl"
-                  loading="eager"
-                  style={{ filter: "contrast(1.08) saturate(1.15)" }}
-                />
-              </div>
-              {/* Floor shadow */}
-              <div
-                className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-3/4 h-6 rounded-full blur-xl pointer-events-none"
-                style={{ background: "hsl(var(--foreground) / 0.12)" }}
-              />
-            </div>
           </div>
         </div>
 
