@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { Check, Play } from "lucide-react";
-import productAlecrim from "@/assets/product-alecrim.jpg";
+
 
 const quickSeals = ["Frete Grátis", "100% Puro", "Não Entope a Máquina"];
 
@@ -132,15 +132,6 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
-
-      {/* Floating product image — 3D overflow effect */}
-      <img
-        src={productAlecrim}
-        alt="Frasco MH AIR"
-        loading="lazy"
-        className="hidden lg:block absolute bottom-0 right-[2%] w-48 xl:w-56 z-20 drop-shadow-2xl translate-y-[15%] product-glossy rounded-xl"
-        style={{ filter: "contrast(1.08) saturate(1.15)" }}
-      />
     </section>
   );
 };
