@@ -94,23 +94,6 @@ const HeroSection = () => {
               </div>
             </div>
 
-            {/* Product image with glossy effect */}
-            <div ref={productRef} className="relative w-48 md:w-56 lg:w-64 lg:absolute lg:-bottom-8 lg:-right-8 xl:-right-12 z-30">
-              <div className="product-glossy rounded-2xl overflow-hidden">
-                <img
-                  src="/images/product-luxury.jpg"
-                  alt="Frasco MH AIR 1L — Essência profissional de luxo"
-                  className="w-full h-auto drop-shadow-2xl"
-                  loading="eager"
-                  style={{ filter: "contrast(1.08) saturate(1.15)" }}
-                />
-              </div>
-              {/* Floor shadow */}
-              <div
-                className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-3/4 h-6 rounded-full blur-xl pointer-events-none"
-                style={{ background: "hsl(var(--foreground) / 0.12)" }}
-              />
-            </div>
           </div>
         </div>
 
