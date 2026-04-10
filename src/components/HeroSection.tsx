@@ -16,7 +16,7 @@ const HeroSection = () => {
     const ctx = gsap.context(() => {
       gsap.from(textRef.current, { x: -60, opacity: 0, duration: 1, ease: "power3.out", delay: 0.2 });
       gsap.from(videoWrapRef.current, { scale: 0.9, opacity: 0, rotation: 2, duration: 1, ease: "power3.out", delay: 0.4 });
-      gsap.from(productRef.current, { scale: 0.85, opacity: 0, y: 40, duration: 1.1, ease: "power3.out", delay: 0.6 });
+      
     }, sectionRef);
     return () => ctx.revert();
   }, []);
