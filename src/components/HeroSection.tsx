@@ -4,12 +4,6 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const frameCount = 144;
-const frameSources = Array.from(
-  { length: frameCount },
-  (_, index) => `/hero-frames/frame-${String(index + 1).padStart(3, "0")}.jpg`,
-);
-
 const headlineLines = [
   { text: "A Perfumação de Luxo", outline: false },
   { text: "que Protege seu Equipamento", outline: true },
@@ -17,125 +11,21 @@ const headlineLines = [
   { text: "com Nanotecnologia.", outline: false },
 ];
 
-const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
-
 const HeroSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const headlineRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const scrollIndicatorRef = useRef<HTMLDivElement>(null);
   const paginationRef = useRef<HTMLDivElement>(null);
-  const imageCacheRef = useRef<HTMLImageElement[]>([]);
-  const rafRef = useRef<number>();
-  const resizeTimeoutRef = useRef<number>();
-  const targetProgressRef = useRef(0);
-  const currentProgressRef = useRef(0);
-  const renderedFrameRef = useRef(-1);
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
     const sticky = stickyRef.current;
-    const canvas = canvasRef.current;
 
-    if (!section || !sticky || !canvas) return;
-
-    const context = canvas.getContext("2d", { alpha: false });
-    if (!context) return;
-
-    const drawFrame = (frameIndex: number) => {
-      const image = imageCacheRef.current[frameIndex];
-      if (!image || !image.complete) return;
-
-      const viewportWidth = window.innerWidth;
-      const viewportHeight = window.innerHeight;
-      const imageRatio = image.naturalWidth / image.naturalHeight;
-      const viewportRatio = viewportWidth / viewportHeight;
-
-      let drawWidth = viewportWidth;
-      let drawHeight = viewportHeight;
-      let offsetX = 0;
-      let offsetY = 0;
-
-      if (imageRatio > viewportRatio) {
-        drawHeight = viewportHeight;
-        drawWidth = drawHeight * imageRatio;
-        offsetX = (viewportWidth - drawWidth) / 2;
-      } else {
-        drawWidth = viewportWidth;
-        drawHeight = drawWidth / imageRatio;
-        const centeredOffsetY = (viewportHeight - drawHeight) / 2;
-        const downwardBias = Math.min(viewportHeight * 0.14, 120);
-        offsetY = centeredOffsetY + downwardBias;
-      }
-
-      context.clearRect(0, 0, viewportWidth, viewportHeight);
-      context.drawImage(image, offsetX, offsetY, drawWidth, drawHeight);
-      renderedFrameRef.current = frameIndex;
-    };
-
-    const sizeCanvas = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.round(window.innerWidth * dpr);
-      canvas.height = Math.round(window.innerHeight * dpr);
-      canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${window.innerHeight}px`;
-      context.setTransform(dpr, 0, 0, dpr, 0, 0);
-      drawFrame(Math.max(renderedFrameRef.current, 0));
-    };
-
-    const updateProgressTarget = () => {
-      const maxScrollableDistance = section.offsetHeight - window.innerHeight;
-      const sectionTop = section.getBoundingClientRect().top;
-
-      targetProgressRef.current = maxScrollableDistance > 0
-        ? clamp(-sectionTop / maxScrollableDistance, 0, 1)
-        : 0;
-    };
-
-    imageCacheRef.current = frameSources.map((src, index) => {
-      const image = new Image();
-      image.src = src;
-      image.decoding = "async";
-      image.loading = "eager";
-
-      if (index === 0) {
-        image.onload = () => {
-          sizeCanvas();
-          drawFrame(0);
-        };
-      }
-
-      return image;
-    });
-
-    const renderLoop = () => {
-      currentProgressRef.current += (targetProgressRef.current - currentProgressRef.current) * 0.14;
-      const nextFrame = Math.round(currentProgressRef.current * (frameCount - 1));
-
-      if (nextFrame !== renderedFrameRef.current) {
-        drawFrame(nextFrame);
-      }
-
-      rafRef.current = window.requestAnimationFrame(renderLoop);
-    };
-
-    const handleResize = () => {
-      window.clearTimeout(resizeTimeoutRef.current);
-      resizeTimeoutRef.current = window.setTimeout(() => {
-        sizeCanvas();
-        updateProgressTarget();
-      }, 80);
-    };
-
-    sizeCanvas();
-    updateProgressTarget();
-    rafRef.current = window.requestAnimationFrame(renderLoop);
-
-    window.addEventListener("scroll", updateProgressTarget, { passive: true });
-    window.addEventListener("resize", handleResize);
+    if (!section || !sticky) return;
 
     const validHeadlineEls = headlineRefs.current.filter(Boolean) as HTMLSpanElement[];
 
@@ -147,7 +37,6 @@ const HeroSection = () => {
       scrollIndicatorRef.current!,
     ];
 
-    // Set initial state
     gsap.set(allAnimatedEls, { willChange: "transform, opacity, filter" });
 
     const introTimeline = gsap.timeline({ defaults: { ease: "power3.out" } });
@@ -181,7 +70,6 @@ const HeroSection = () => {
         "-=0.2",
       );
 
-    // Exit animation on scroll
     const exitTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: section,
@@ -221,17 +109,6 @@ const HeroSection = () => {
       );
 
     return () => {
-      if (rafRef.current) {
-        window.cancelAnimationFrame(rafRef.current);
-      }
-
-      if (resizeTimeoutRef.current) {
-        window.clearTimeout(resizeTimeoutRef.current);
-      }
-
-      window.removeEventListener("scroll", updateProgressTarget);
-      window.removeEventListener("resize", handleResize);
-
       try {
         introTimeline.revert();
         exitTimeline.revert();
@@ -247,7 +124,16 @@ const HeroSection = () => {
     <section ref={sectionRef} className="relative h-[300vh] bg-background">
       <div ref={stickyRef} className="sticky top-0 h-screen overflow-hidden bg-background">
         <div className="absolute inset-0">
-          <canvas ref={canvasRef} className="h-full w-full" aria-hidden="true" />
+          <video
+            ref={videoRef}
+            className="h-full w-full object-cover"
+            src="/hero-video.mp4"
+            autoPlay
+            loop
+            muted
+            playsInline
+            aria-hidden="true"
+          />
           <div
             className="absolute inset-0"
             style={{
