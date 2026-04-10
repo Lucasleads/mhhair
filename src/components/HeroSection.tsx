@@ -66,9 +66,9 @@ const HeroSection = () => {
       } else {
         drawWidth = viewportWidth;
         drawHeight = drawWidth / imageRatio;
-        // Push image down so the top of the product clears the fixed header (~70px)
-        const headerOffset = 70;
-        offsetY = Math.min(headerOffset, (viewportHeight - drawHeight) / 2 + headerOffset);
+        // Push image down to clear fixed header and give breathing room to product top
+        const headerClearance = 90;
+        offsetY = Math.min(headerClearance, viewportHeight - drawHeight + headerClearance);
       }
 
       context.clearRect(0, 0, viewportWidth, viewportHeight);
