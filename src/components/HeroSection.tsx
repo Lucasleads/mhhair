@@ -232,9 +232,12 @@ const HeroSection = () => {
 
       try {
         introTimeline.revert();
+        exitTimeline.revert();
       } catch {
         introTimeline.kill();
+        exitTimeline.kill();
       }
+      ScrollTrigger.getAll().forEach((st) => st.kill());
     };
   }, []);
 
