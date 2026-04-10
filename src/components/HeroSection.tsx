@@ -116,22 +116,22 @@ const HeroSection = () => {
       ref={wrapperRef}
       className="relative w-full h-screen overflow-hidden bg-background"
     >
-      {/* Video — full bleed, behind text */}
-      <div className="absolute inset-0 flex items-center justify-center md:justify-end pointer-events-none">
+      {/* Video — full bleed background */}
+      <div className="absolute inset-0 pointer-events-none">
         <video
           ref={videoRef}
-          className="w-[90%] md:w-[55%] h-auto max-h-[85vh] object-contain opacity-90"
+          className="w-full h-full object-cover"
           src="/videos/hero-scroll.mp4"
           muted
           playsInline
           preload="auto"
         />
-        {/* Subtle gradient overlay to ensure text readability */}
+        {/* Dark overlay for text readability */}
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(90deg, hsl(var(--background)) 0%, hsl(var(--background) / 0.7) 40%, transparent 70%)",
+              "linear-gradient(to top, hsl(var(--background) / 0.85) 0%, hsl(var(--background) / 0.4) 40%, hsl(var(--background) / 0.2) 100%)",
           }}
         />
       </div>
