@@ -132,48 +132,35 @@ const HeroSection = () => {
     window.addEventListener("scroll", updateProgressTarget, { passive: true });
     window.addEventListener("resize", handleResize);
 
+    const validHeadlineEls = headlineRefs.current.filter(Boolean) as HTMLSpanElement[];
+
     const introTimeline = gsap.timeline({ defaults: { ease: "power3.out" } });
 
     introTimeline
-      .from(headlineRefs.current.filter(Boolean), {
+      .from(validHeadlineEls, {
         y: 72,
         opacity: 0,
         duration: 1,
         stagger: 0.12,
       })
       .from(
-        subtitleRef.current,
-        {
-          y: 28,
-          opacity: 0,
-          duration: 0.8,
-        },
+        subtitleRef.current!,
+        { y: 28, opacity: 0, duration: 0.8 },
         "-=0.45",
       )
       .from(
-        ctaRef.current,
-        {
-          y: 20,
-          opacity: 0,
-          duration: 0.7,
-        },
+        ctaRef.current!,
+        { y: 20, opacity: 0, duration: 0.7 },
         "-=0.35",
       )
       .from(
-        paginationRef.current,
-        {
-          x: 18,
-          opacity: 0,
-          duration: 0.7,
-        },
+        paginationRef.current!,
+        { x: 18, opacity: 0, duration: 0.7 },
         "-=0.25",
       )
       .from(
-        scrollIndicatorRef.current,
-        {
-          opacity: 0,
-          duration: 0.8,
-        },
+        scrollIndicatorRef.current!,
+        { opacity: 0, duration: 0.8 },
         "-=0.2",
       );
 
@@ -188,7 +175,12 @@ const HeroSection = () => {
 
       window.removeEventListener("scroll", updateProgressTarget);
       window.removeEventListener("resize", handleResize);
-      introTimeline.kill();
+
+      try {
+        introTimeline.revert();
+      } catch {
+        introTimeline.kill();
+      }
     };
   }, []);
 
