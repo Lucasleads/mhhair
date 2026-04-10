@@ -100,8 +100,7 @@ const HeroSection = () => {
         {/* Left Column: Text + CTA */}
         <div ref={textRef} className="lg:order-1 order-2">
           <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-bold text-foreground leading-[1.15] mb-6">
-            A Perfumação de Luxo que{" "}
-            <span className="text-success">Protege seu Equipamento</span>:{" "}
+            A Perfumação de Luxo que Protege seu Equipamento:{" "}
             <span className="text-ocre">Essências Profissionais</span> com Nanotecnologia.
           </h1>
 
