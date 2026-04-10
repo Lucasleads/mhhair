@@ -66,8 +66,9 @@ const HeroSection = () => {
       } else {
         drawWidth = viewportWidth;
         drawHeight = drawWidth / imageRatio;
-        // Bias toward showing the upper-center of the image (30% from top instead of 50%)
-        offsetY = (viewportHeight - drawHeight) * 0.3;
+        // Push image down so the top of the product clears the fixed header (~70px)
+        const headerOffset = 70;
+        offsetY = Math.min(headerOffset, (viewportHeight - drawHeight) / 2 + headerOffset);
       }
 
       context.clearRect(0, 0, viewportWidth, viewportHeight);
