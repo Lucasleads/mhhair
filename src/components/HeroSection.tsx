@@ -207,14 +207,14 @@ const HeroSection = () => {
 
         <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-center px-6 md:px-16 lg:px-24">
           <div className="max-w-3xl">
-            <div className="mb-6 md:mb-8">
+            <div className="mb-5 md:mb-6">
               {headlineLines.map((line, index) => (
                 <span
                   key={line.text}
                   ref={(element) => {
                     headlineRefs.current[index] = element;
                   }}
-                  className={`block font-heading text-3xl font-bold leading-[1.02] tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl ${
+                  className={`block font-heading text-2xl font-bold leading-[0.95] tracking-tight sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl ${
                     line.outline ? "text-transparent" : "text-foreground"
                   }`}
                   style={
