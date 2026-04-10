@@ -205,22 +205,22 @@ const HeroSection = () => {
           />
         </div>
 
-        <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-6 pb-28 md:px-16 md:pb-32 lg:px-24 lg:pb-36">
-          <div className="max-w-2xl">
-            <div className="mb-5 md:mb-6">
+        <div className="relative z-10 flex h-full flex-col justify-end px-6 pb-20 md:px-12 md:pb-24 lg:px-16 lg:pb-28">
+          <div className="max-w-lg">
+            <div className="mb-4">
               {headlineLines.map((line, index) => (
                 <span
                   key={line.text}
                   ref={(element) => {
                     headlineRefs.current[index] = element;
                   }}
-                  className={`block font-heading text-2xl font-bold leading-[0.85] tracking-tight sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl ${
+                  className={`block font-heading text-xl font-bold leading-[0.85] tracking-tight sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl ${
                     line.outline ? "text-transparent" : "text-foreground"
                   }`}
                   style={
                     line.outline
                       ? {
-                          WebkitTextStroke: "1.5px hsl(var(--foreground))",
+                          WebkitTextStroke: "1px hsl(var(--foreground))",
                         }
                       : undefined
                   }
@@ -232,22 +232,22 @@ const HeroSection = () => {
 
             <p
               ref={subtitleRef}
-              className="mb-8 max-w-xl font-body text-base leading-relaxed text-foreground/80 md:mb-10 md:text-lg"
+              className="mb-6 max-w-sm font-body text-sm leading-relaxed text-foreground/70 md:text-base"
             >
               Descubra o segredo dos maiores hotéis e clínicas do mundo. Projeção intensa,
               rendimento superior e 180 dias de garantia total.
             </p>
 
-            <div ref={ctaRef} className="flex flex-wrap gap-4">
+            <div ref={ctaRef} className="flex flex-wrap gap-3">
               <a
                 href="#kits"
-                className="inline-flex items-center justify-center rounded-full bg-foreground px-8 py-4 font-body text-sm font-bold uppercase tracking-widest text-background transition-transform hover:scale-105"
+                className="inline-flex items-center justify-center rounded-full bg-foreground px-6 py-3 font-body text-xs font-bold uppercase tracking-widest text-background transition-transform hover:scale-105"
               >
                 Começar Agora
               </a>
               <a
                 href="#kits"
-                className="inline-flex items-center justify-center rounded-full border border-foreground/30 px-8 py-4 font-body text-sm font-semibold uppercase tracking-widest text-foreground transition-all hover:border-ocre hover:text-ocre"
+                className="inline-flex items-center justify-center rounded-full border border-foreground/30 px-6 py-3 font-body text-xs font-semibold uppercase tracking-widest text-foreground transition-all hover:border-ocre hover:text-ocre"
               >
                 Ver Demonstração
               </a>
