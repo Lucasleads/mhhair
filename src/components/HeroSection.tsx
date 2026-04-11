@@ -13,8 +13,7 @@ const headlineLines = [
 
 const HeroSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const stickyRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const mediaRef = useRef<HTMLDivElement>(null);
   const headlineRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
@@ -23,109 +22,112 @@ const HeroSection = () => {
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
-    const sticky = stickyRef.current;
+    const media = mediaRef.current;
 
-    if (!section || !sticky) return;
+    if (!section || !media) return;
 
     const validHeadlineEls = headlineRefs.current.filter(Boolean) as HTMLSpanElement[];
-
-    const allAnimatedEls = [
+    const animatedEls = [
       ...validHeadlineEls,
-      subtitleRef.current!,
-      ctaRef.current!,
-      paginationRef.current!,
-      scrollIndicatorRef.current!,
-    ];
+      subtitleRef.current,
+      ctaRef.current,
+      paginationRef.current,
+      scrollIndicatorRef.current,
+    ].filter(Boolean) as HTMLElement[];
 
-    gsap.set(allAnimatedEls, { willChange: "transform, opacity, filter" });
+    const ctx = gsap.context(() => {
+      gsap.set(animatedEls, { willChange: "transform, opacity, filter" });
+      gsap.set(media, { willChange: "transform, opacity, filter" });
 
-    const introTimeline = gsap.timeline({ defaults: { ease: "power3.out" } });
+      gsap.timeline({ defaults: { ease: "power3.out" } })
+        .from(validHeadlineEls, {
+          y: 60,
+          opacity: 0,
+          filter: "blur(12px)",
+          duration: 1,
+          stagger: 0.12,
+        })
+        .from(
+          subtitleRef.current,
+          { y: 24, opacity: 0, filter: "blur(8px)", duration: 0.8 },
+          "-=0.45",
+        )
+        .from(
+          ctaRef.current,
+          { y: 18, opacity: 0, filter: "blur(8px)", duration: 0.7 },
+          "-=0.35",
+        )
+        .from(
+          paginationRef.current,
+          { x: 18, opacity: 0, filter: "blur(6px)", duration: 0.7 },
+          "-=0.25",
+        )
+        .from(
+          scrollIndicatorRef.current,
+          { opacity: 0, filter: "blur(6px)", duration: 0.8 },
+          "-=0.2",
+        );
 
-    introTimeline
-      .from(validHeadlineEls, {
-        y: 60,
-        opacity: 0,
-        filter: "blur(12px)",
-        duration: 1,
-        stagger: 0.12,
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: "+=320",
+          scrub: 0.8,
+        },
       })
-      .from(
-        subtitleRef.current!,
-        { y: 24, opacity: 0, filter: "blur(8px)", duration: 0.8 },
-        "-=0.45",
-      )
-      .from(
-        ctaRef.current!,
-        { y: 18, opacity: 0, filter: "blur(8px)", duration: 0.7 },
-        "-=0.35",
-      )
-      .from(
-        paginationRef.current!,
-        { x: 18, opacity: 0, filter: "blur(6px)", duration: 0.7 },
-        "-=0.25",
-      )
-      .from(
-        scrollIndicatorRef.current!,
-        { opacity: 0, filter: "blur(6px)", duration: 0.8 },
-        "-=0.2",
-      );
+        .to(
+          media,
+          {
+            yPercent: 10,
+            scale: 1.04,
+            opacity: 0.5,
+            filter: "blur(4px)",
+            ease: "power2.inOut",
+          },
+          0,
+        )
+        .to(
+          validHeadlineEls,
+          {
+            y: -40,
+            opacity: 0,
+            filter: "blur(12px)",
+            stagger: 0.03,
+            ease: "power2.in",
+          },
+          0,
+        )
+        .to(
+          subtitleRef.current,
+          { y: -30, opacity: 0, filter: "blur(8px)", ease: "power2.in" },
+          0.05,
+        )
+        .to(
+          ctaRef.current,
+          { y: -20, opacity: 0, filter: "blur(8px)", ease: "power2.in" },
+          0.08,
+        )
+        .to(
+          paginationRef.current,
+          { x: 18, opacity: 0, filter: "blur(6px)", ease: "power2.in" },
+          0.08,
+        )
+        .to(
+          scrollIndicatorRef.current,
+          { opacity: 0, filter: "blur(6px)", ease: "power2.in" },
+          0.04,
+        );
+    }, section);
 
-    const exitTimeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: section,
-        start: "top top",
-        end: "25% top",
-        scrub: 0.6,
-      },
-    });
-
-    exitTimeline
-      .to(validHeadlineEls, {
-        y: -40,
-        opacity: 0,
-        filter: "blur(12px)",
-        stagger: 0.03,
-        ease: "power2.in",
-      })
-      .to(
-        subtitleRef.current!,
-        { y: -30, opacity: 0, filter: "blur(8px)", ease: "power2.in" },
-        "<0.05",
-      )
-      .to(
-        ctaRef.current!,
-        { y: -20, opacity: 0, filter: "blur(8px)", ease: "power2.in" },
-        "<0.05",
-      )
-      .to(
-        paginationRef.current!,
-        { x: 18, opacity: 0, filter: "blur(6px)", ease: "power2.in" },
-        "<0.05",
-      )
-      .to(
-        scrollIndicatorRef.current!,
-        { opacity: 0, filter: "blur(6px)", ease: "power2.in" },
-        "<",
-      );
-
-    return () => {
-      try {
-        introTimeline.revert();
-        exitTimeline.revert();
-      } catch {
-        introTimeline.kill();
-        exitTimeline.kill();
-      }
-      ScrollTrigger.getAll().forEach((st) => st.kill());
-    };
+    return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative h-[300vh] bg-background">
-      <div ref={stickyRef} className="sticky top-0 h-screen overflow-hidden bg-background">
-        <div className="absolute inset-0">
+    <section ref={sectionRef} className="relative min-h-screen bg-background">
+      <div className="relative min-h-screen overflow-hidden bg-background">
+        <div ref={mediaRef} className="absolute inset-0 origin-center">
           <video
-            ref={videoRef}
             className="h-full w-full object-cover"
             src="/hero-video.mp4"
             autoPlay
@@ -150,7 +152,7 @@ const HeroSection = () => {
           />
         </div>
 
-        <div className="relative z-10 flex h-full flex-col justify-end px-6 pb-20 md:px-12 md:pb-24 lg:px-16 lg:pb-28">
+        <div className="relative z-10 flex min-h-screen flex-col justify-end px-6 pb-20 md:px-12 md:pb-24 lg:px-16 lg:pb-28">
           <div className="max-w-lg">
             <div className="mb-4">
               {headlineLines.map((line, index) => (
