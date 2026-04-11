@@ -31,7 +31,7 @@ const HeroSection = () => {
     if (!section || !pinned || !media || !video) return;
 
     const validHeadlineEls = headlineRefs.current.filter(Boolean) as HTMLSpanElement[];
-    const animatedEls = [
+    const contentEls = [
       ...validHeadlineEls,
       subtitleRef.current,
       ctaRef.current,
@@ -39,99 +39,75 @@ const HeroSection = () => {
       scrollIndicatorRef.current,
     ].filter(Boolean) as HTMLElement[];
 
-    // Wait for video metadata to know duration
-    const setup = () => {
-      const duration = video.duration;
-      if (!duration || !isFinite(duration)) return;
+    const ctx = gsap.context(() => {
+      // ── Set initial hidden state ──
+      gsap.set(contentEls, { y: 60, opacity: 0, filter: "blur(12px)" });
+      gsap.set(media, { willChange: "transform, opacity, filter" });
 
-      // Pause autoplay — scroll controls playback
+      // ── Intro animation (on load) ──
+      const introTl = gsap.timeline({ defaults: { ease: "power3.out" }, delay: 0.2 });
+      introTl
+        .to(validHeadlineEls, { y: 0, opacity: 1, filter: "blur(0px)", duration: 1, stagger: 0.12 })
+        .to(subtitleRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.8 }, "-=0.45")
+        .to(ctaRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.7 }, "-=0.35")
+        .to(paginationRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.7 }, "-=0.25")
+        .to(scrollIndicatorRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.8 }, "-=0.2");
+
+      // ── Scroll-driven exit animations (first 15% of section scroll) ──
+      const masterTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: "top top",
+          end: "bottom bottom",
+          scrub: 0.6,
+        },
+      });
+
+      masterTl.to(validHeadlineEls, { y: -40, opacity: 0, filter: "blur(12px)", stagger: 0.02, ease: "power2.in", duration: 0.15 }, 0);
+      masterTl.to(subtitleRef.current, { y: -30, opacity: 0, filter: "blur(8px)", ease: "power2.in", duration: 0.15 }, 0);
+      masterTl.to(ctaRef.current, { y: -20, opacity: 0, filter: "blur(8px)", ease: "power2.in", duration: 0.15 }, 0.02);
+      masterTl.to(paginationRef.current, { x: 18, opacity: 0, filter: "blur(6px)", ease: "power2.in", duration: 0.15 }, 0.02);
+      masterTl.to(scrollIndicatorRef.current, { opacity: 0, filter: "blur(6px)", ease: "power2.in", duration: 0.1 }, 0);
+      masterTl.to(media, { scale: 1.06, filter: "blur(2px)", opacity: 0.6, ease: "power2.inOut", duration: 0.5 }, 0.5);
+    }, section);
+
+    // ── Video scrub (depends on video metadata) ──
+    let videoCtx: gsap.Context | null = null;
+    const setupVideoScrub = () => {
+      const dur = video.duration;
+      if (!dur || !isFinite(dur)) return;
       video.pause();
 
-      const ctx = gsap.context(() => {
-        gsap.set(animatedEls, { willChange: "transform, opacity, filter" });
-        gsap.set(media, { willChange: "transform, opacity, filter" });
-
-        // ── Intro animation (on load) ──
-        gsap.timeline({ defaults: { ease: "power3.out" } })
-          .from(validHeadlineEls, {
-            y: 60, opacity: 0, filter: "blur(12px)", duration: 1, stagger: 0.12,
-          })
-          .from(subtitleRef.current, { y: 24, opacity: 0, filter: "blur(8px)", duration: 0.8 }, "-=0.45")
-          .from(ctaRef.current, { y: 18, opacity: 0, filter: "blur(8px)", duration: 0.7 }, "-=0.35")
-          .from(paginationRef.current, { x: 18, opacity: 0, filter: "blur(6px)", duration: 0.7 }, "-=0.25")
-          .from(scrollIndicatorRef.current, { opacity: 0, filter: "blur(6px)", duration: 0.8 }, "-=0.2");
-
-        // ── Scrollytelling: pin + video scrub + content fade out ──
-        const mainTl = gsap.timeline({
+      videoCtx = gsap.context(() => {
+        gsap.to(video, {
+          currentTime: dur,
+          ease: "none",
           scrollTrigger: {
             trigger: section,
             start: "top top",
             end: "bottom bottom",
-            pin: pinned,
             scrub: 0.6,
           },
         });
-
-        // Video scrub: advance frame-by-frame with scroll
-        mainTl.to(video, {
-          currentTime: duration,
-          ease: "none",
-        }, 0);
-
-        // Content fade/blur out in the first 30% of scroll
-        mainTl.to(
-          validHeadlineEls,
-          { y: -40, opacity: 0, filter: "blur(12px)", stagger: 0.02, ease: "power2.in" },
-          0,
-        );
-        mainTl.to(
-          subtitleRef.current,
-          { y: -30, opacity: 0, filter: "blur(8px)", ease: "power2.in" },
-          0,
-        );
-        mainTl.to(
-          ctaRef.current,
-          { y: -20, opacity: 0, filter: "blur(8px)", ease: "power2.in" },
-          0.02,
-        );
-        mainTl.to(
-          paginationRef.current,
-          { x: 18, opacity: 0, filter: "blur(6px)", ease: "power2.in" },
-          0.02,
-        );
-        mainTl.to(
-          scrollIndicatorRef.current,
-          { opacity: 0, filter: "blur(6px)", ease: "power2.in" },
-          0.01,
-        );
-
-        // Subtle media effects during scroll
-        mainTl.to(
-          media,
-          { scale: 1.06, filter: "blur(2px)", opacity: 0.6, ease: "power2.inOut" },
-          0.5,
-        );
       }, section);
-
-      // Store context for cleanup
-      (section as any).__gsapCtx = ctx;
     };
 
     if (video.readyState >= 1) {
-      setup();
+      setupVideoScrub();
     } else {
-      video.addEventListener("loadedmetadata", setup, { once: true });
+      video.addEventListener("loadedmetadata", setupVideoScrub, { once: true });
     }
 
     return () => {
-      (section as any).__gsapCtx?.revert();
-      video.removeEventListener("loadedmetadata", setup);
+      ctx.revert();
+      videoCtx?.revert();
+      video.removeEventListener("loadedmetadata", setupVideoScrub);
     };
   }, []);
 
   return (
     <section ref={sectionRef} className="relative h-[500vh] bg-background">
-      <div ref={pinnedRef} className="relative h-screen w-full overflow-hidden bg-background">
+      <div ref={pinnedRef} className="sticky top-0 h-screen w-full overflow-hidden bg-background">
         <div ref={mediaRef} className="absolute inset-0 origin-center">
           <video
             ref={videoRef}
