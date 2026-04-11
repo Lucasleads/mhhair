@@ -8,7 +8,7 @@ gsap.registerPlugin(ScrollTrigger);
 const headlineLines = [
   { text: "A Perfumação de Luxo", outline: false, highlight: null },
   { text: "que Protege seu Equipamento", outline: false, highlight: "Protege" },
-  { text: "Essências Profissionais", outline: true, highlight: null },
+  { text: "Essências Profissionais", outline: false, highlight: "Essências Profissionais", highlightClass: "text-primary" },
   { text: "com Nanotecnologia.", outline: false, highlight: null },
 ];
 
@@ -136,7 +136,7 @@ const HeroSection = () => {
                   {line.highlight ? (
                     <>
                       {line.text.split(line.highlight)[0]}
-                      <span className="text-ocre">{line.highlight}</span>
+                      <span className={line.highlightClass || "text-ocre"}>{line.highlight}</span>
                       {line.text.split(line.highlight)[1]}
                     </>
                   ) : line.text}
