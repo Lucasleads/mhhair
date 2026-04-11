@@ -38,21 +38,15 @@ const HookVslSection = () => {
 
         {/* VSL Video Embed */}
         <div className="hook-animate relative mx-auto max-w-3xl mb-10 rounded-xl overflow-hidden shadow-[var(--shadow-card-hover)]">
-          <div className="relative w-full bg-foreground/5" style={{ paddingBottom: "56.25%" }}>
-            <div className="absolute inset-0 flex items-center justify-center">
-              {/* Placeholder for VSL — replace src with actual video */}
-              <div className="flex flex-col items-center gap-4">
-                <div className="w-20 h-20 rounded-full bg-ocre/90 flex items-center justify-center shadow-[var(--shadow-ocre)] cursor-pointer transition-transform hover:scale-110">
-                  <svg className="w-8 h-8 text-ocre-foreground ml-1" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
-                </div>
-                <span className="font-body text-sm text-muted-foreground">
-                  Assista a apresentação com Cristiano
-                </span>
-              </div>
-            </div>
-          </div>
+          <video
+            className="w-full rounded-xl"
+            controls
+            preload="metadata"
+            poster=""
+          >
+            <source src="/videos/vsl.mp4" type="video/mp4" />
+            Seu navegador não suporta vídeo.
+          </video>
         </div>
 
         {/* CTA */}
