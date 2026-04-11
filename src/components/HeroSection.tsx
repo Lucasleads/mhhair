@@ -133,7 +133,13 @@ const HeroSection = () => {
                       : { color: "#0a0a0a" }
                   }
                 >
-                  {line.text}
+                  {line.highlight ? (
+                    <>
+                      {line.text.split(line.highlight)[0]}
+                      <span className="text-ocre">{line.highlight}</span>
+                      {line.text.split(line.highlight)[1]}
+                    </>
+                  ) : line.text}
                 </span>
               ))}
             </div>
