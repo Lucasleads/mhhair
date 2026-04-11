@@ -13,7 +13,9 @@ const headlineLines = [
 
 const HeroSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const pinnedRef = useRef<HTMLDivElement>(null);
   const mediaRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const headlineRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
@@ -22,9 +24,11 @@ const HeroSection = () => {
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
+    const pinned = pinnedRef.current;
     const media = mediaRef.current;
+    const video = videoRef.current;
 
-    if (!section || !media) return;
+    if (!section || !pinned || !media || !video) return;
 
     const validHeadlineEls = headlineRefs.current.filter(Boolean) as HTMLSpanElement[];
     const animatedEls = [
@@ -35,105 +39,107 @@ const HeroSection = () => {
       scrollIndicatorRef.current,
     ].filter(Boolean) as HTMLElement[];
 
-    const ctx = gsap.context(() => {
-      gsap.set(animatedEls, { willChange: "transform, opacity, filter" });
-      gsap.set(media, { willChange: "transform, opacity, filter" });
+    // Wait for video metadata to know duration
+    const setup = () => {
+      const duration = video.duration;
+      if (!duration || !isFinite(duration)) return;
 
-      gsap.timeline({ defaults: { ease: "power3.out" } })
-        .from(validHeadlineEls, {
-          y: 60,
-          opacity: 0,
-          filter: "blur(12px)",
-          duration: 1,
-          stagger: 0.12,
-        })
-        .from(
-          subtitleRef.current,
-          { y: 24, opacity: 0, filter: "blur(8px)", duration: 0.8 },
-          "-=0.45",
-        )
-        .from(
-          ctaRef.current,
-          { y: 18, opacity: 0, filter: "blur(8px)", duration: 0.7 },
-          "-=0.35",
-        )
-        .from(
-          paginationRef.current,
-          { x: 18, opacity: 0, filter: "blur(6px)", duration: 0.7 },
-          "-=0.25",
-        )
-        .from(
-          scrollIndicatorRef.current,
-          { opacity: 0, filter: "blur(6px)", duration: 0.8 },
-          "-=0.2",
-        );
+      // Pause autoplay — scroll controls playback
+      video.pause();
 
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: section,
-          start: "top top",
-          end: "+=320",
-          scrub: 0.8,
-        },
-      })
-        .to(
-          media,
-          {
-            yPercent: 10,
-            scale: 1.04,
-            opacity: 0.5,
-            filter: "blur(4px)",
-            ease: "power2.inOut",
+      const ctx = gsap.context(() => {
+        gsap.set(animatedEls, { willChange: "transform, opacity, filter" });
+        gsap.set(media, { willChange: "transform, opacity, filter" });
+
+        // ── Intro animation (on load) ──
+        gsap.timeline({ defaults: { ease: "power3.out" } })
+          .from(validHeadlineEls, {
+            y: 60, opacity: 0, filter: "blur(12px)", duration: 1, stagger: 0.12,
+          })
+          .from(subtitleRef.current, { y: 24, opacity: 0, filter: "blur(8px)", duration: 0.8 }, "-=0.45")
+          .from(ctaRef.current, { y: 18, opacity: 0, filter: "blur(8px)", duration: 0.7 }, "-=0.35")
+          .from(paginationRef.current, { x: 18, opacity: 0, filter: "blur(6px)", duration: 0.7 }, "-=0.25")
+          .from(scrollIndicatorRef.current, { opacity: 0, filter: "blur(6px)", duration: 0.8 }, "-=0.2");
+
+        // ── Scrollytelling: pin + video scrub + content fade out ──
+        const mainTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: section,
+            start: "top top",
+            end: "bottom bottom",
+            pin: pinned,
+            scrub: 0.6,
           },
-          0,
-        )
-        .to(
+        });
+
+        // Video scrub: advance frame-by-frame with scroll
+        mainTl.to(video, {
+          currentTime: duration,
+          ease: "none",
+        }, 0);
+
+        // Content fade/blur out in the first 30% of scroll
+        mainTl.to(
           validHeadlineEls,
-          {
-            y: -40,
-            opacity: 0,
-            filter: "blur(12px)",
-            stagger: 0.03,
-            ease: "power2.in",
-          },
+          { y: -40, opacity: 0, filter: "blur(12px)", stagger: 0.02, ease: "power2.in" },
           0,
-        )
-        .to(
+        );
+        mainTl.to(
           subtitleRef.current,
           { y: -30, opacity: 0, filter: "blur(8px)", ease: "power2.in" },
-          0.05,
-        )
-        .to(
+          0,
+        );
+        mainTl.to(
           ctaRef.current,
           { y: -20, opacity: 0, filter: "blur(8px)", ease: "power2.in" },
-          0.08,
-        )
-        .to(
+          0.02,
+        );
+        mainTl.to(
           paginationRef.current,
           { x: 18, opacity: 0, filter: "blur(6px)", ease: "power2.in" },
-          0.08,
-        )
-        .to(
+          0.02,
+        );
+        mainTl.to(
           scrollIndicatorRef.current,
           { opacity: 0, filter: "blur(6px)", ease: "power2.in" },
-          0.04,
+          0.01,
         );
-    }, section);
 
-    return () => ctx.revert();
+        // Subtle media effects during scroll
+        mainTl.to(
+          media,
+          { scale: 1.06, filter: "blur(2px)", opacity: 0.6, ease: "power2.inOut" },
+          0.5,
+        );
+      }, section);
+
+      // Store context for cleanup
+      (section as any).__gsapCtx = ctx;
+    };
+
+    if (video.readyState >= 1) {
+      setup();
+    } else {
+      video.addEventListener("loadedmetadata", setup, { once: true });
+    }
+
+    return () => {
+      (section as any).__gsapCtx?.revert();
+      video.removeEventListener("loadedmetadata", setup);
+    };
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative min-h-screen bg-background">
-      <div className="relative min-h-screen overflow-hidden bg-background">
+    <section ref={sectionRef} className="relative h-[500vh] bg-background">
+      <div ref={pinnedRef} className="relative h-screen w-full overflow-hidden bg-background">
         <div ref={mediaRef} className="absolute inset-0 origin-center">
           <video
+            ref={videoRef}
             className="h-full w-full object-cover"
             src="/hero-video.mp4"
-            autoPlay
-            loop
             muted
             playsInline
+            preload="auto"
             aria-hidden="true"
           />
           <div
@@ -152,7 +158,7 @@ const HeroSection = () => {
           />
         </div>
 
-        <div className="relative z-10 flex min-h-screen flex-col justify-end px-6 pb-20 md:px-12 md:pb-24 lg:px-16 lg:pb-28">
+        <div className="relative z-10 flex h-full flex-col justify-end px-6 pb-20 md:px-12 md:pb-24 lg:px-16 lg:pb-28">
           <div className="max-w-lg">
             <div className="mb-4">
               {headlineLines.map((line, index) => (
@@ -166,9 +172,7 @@ const HeroSection = () => {
                   }`}
                   style={
                     line.outline
-                      ? {
-                          WebkitTextStroke: "1px hsl(var(--foreground))",
-                        }
+                      ? { WebkitTextStroke: "1px hsl(var(--foreground))" }
                       : undefined
                   }
                 >
