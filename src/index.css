@@ -15,21 +15,21 @@
     --popover: 0 0% 100%;
     --popover-foreground: 225 30% 12%;
 
-    --primary: 228 55% 18%;
+    --primary: 216 76% 32%;
     --primary-foreground: 0 0% 98%;
 
-    --secondary: 210 20% 95%;
-    --secondary-foreground: 225 30% 12%;
+    --secondary: 209 69% 41%;
+    --secondary-foreground: 0 0% 100%;
 
     --muted: 210 15% 93%;
     --muted-foreground: 220 10% 46%;
 
-    --accent: 172 55% 42%;
+    --accent: 206 64% 29%;
     --accent-foreground: 0 0% 100%;
 
-    --ocre: 38 72% 55%;
+    --ocre: 30 58% 62%;
     --ocre-foreground: 0 0% 100%;
-    --ocre-light: 38 72% 92%;
+    --ocre-light: 22 44% 72%;
 
     --success: 152 55% 38%;
     --success-foreground: 0 0% 100%;
