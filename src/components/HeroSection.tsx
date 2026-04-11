@@ -151,13 +151,13 @@ const HeroSection = () => {
                 href="#kits"
                 className="inline-flex items-center justify-center rounded-full bg-foreground px-6 py-3 font-body text-xs font-bold uppercase tracking-widest text-background transition-transform hover:scale-105"
               >
-                Começar Agora
+                Assinar e Economizar
               </a>
               <a
                 href="#kits"
                 className="inline-flex items-center justify-center rounded-full border border-foreground/30 px-6 py-3 font-body text-xs font-semibold uppercase tracking-widest text-foreground transition-all hover:border-ocre hover:text-ocre"
               >
-                Ver Demonstração
+                Escolher Fragrância
               </a>
             </div>
           </div>
