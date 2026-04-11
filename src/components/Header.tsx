@@ -61,21 +61,6 @@ const Header = () => {
           ))}
         </nav>
 
-        {/* Desktop CTAs */}
-        <div className="hidden md:flex items-center gap-3">
-          <a
-            href="#kits"
-            className="font-body text-xs font-semibold uppercase tracking-widest text-foreground border border-foreground/20 px-5 py-2.5 rounded-full hover:border-ocre hover:text-ocre transition-all"
-          >
-            Assinar e Economizar
-          </a>
-          <a
-            href="#kits"
-            className="font-body text-xs font-bold uppercase tracking-widest bg-ocre text-ocre-foreground px-5 py-2.5 rounded-full hover:scale-105 transition-transform shadow-[var(--shadow-ocre)]"
-          >
-            Escolher Fragrância
-          </a>
-        </div>
 
         {/* Mobile toggle */}
         <button
