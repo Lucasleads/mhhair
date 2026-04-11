@@ -53,25 +53,21 @@ const HeroSection = () => {
         .to(paginationRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.7 }, "-=0.25")
         .to(scrollIndicatorRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.8 }, "-=0.2");
 
-      // ── Master timeline: pin + exit animations + video scrub ──
+      // ── Scroll-driven exit animations (first 15% of section scroll) ──
       const masterTl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
           start: "top top",
           end: "bottom bottom",
-          pin: pinned,
           scrub: 0.6,
         },
       });
 
-      // Content fade/blur out in first 15% of scroll
       masterTl.to(validHeadlineEls, { y: -40, opacity: 0, filter: "blur(12px)", stagger: 0.02, ease: "power2.in", duration: 0.15 }, 0);
       masterTl.to(subtitleRef.current, { y: -30, opacity: 0, filter: "blur(8px)", ease: "power2.in", duration: 0.15 }, 0);
       masterTl.to(ctaRef.current, { y: -20, opacity: 0, filter: "blur(8px)", ease: "power2.in", duration: 0.15 }, 0.02);
       masterTl.to(paginationRef.current, { x: 18, opacity: 0, filter: "blur(6px)", ease: "power2.in", duration: 0.15 }, 0.02);
       masterTl.to(scrollIndicatorRef.current, { opacity: 0, filter: "blur(6px)", ease: "power2.in", duration: 0.1 }, 0);
-
-      // Media blur/zoom in second half
       masterTl.to(media, { scale: 1.06, filter: "blur(2px)", opacity: 0.6, ease: "power2.inOut", duration: 0.5 }, 0.5);
     }, section);
 
@@ -111,7 +107,7 @@ const HeroSection = () => {
 
   return (
     <section ref={sectionRef} className="relative h-[500vh] bg-background">
-      <div ref={pinnedRef} className="relative h-screen w-full overflow-hidden bg-background">
+      <div ref={pinnedRef} className="sticky top-0 h-screen w-full overflow-hidden bg-background">
         <div ref={mediaRef} className="absolute inset-0 origin-center">
           <video
             ref={videoRef}
