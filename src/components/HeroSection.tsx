@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useFrameSequence } from "@/hooks/useFrameSequence";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,20 +16,21 @@ const HeroSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const pinnedRef = useRef<HTMLDivElement>(null);
   const mediaRef = useRef<HTMLDivElement>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const headlineRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const scrollIndicatorRef = useRef<HTMLDivElement>(null);
   const paginationRef = useRef<HTMLDivElement>(null);
 
+  const { loaded, setProgress } = useFrameSequence(canvasRef);
+
   useLayoutEffect(() => {
     const section = sectionRef.current;
     const pinned = pinnedRef.current;
     const media = mediaRef.current;
-    const video = videoRef.current;
 
-    if (!section || !pinned || !media || !video) return;
+    if (!section || !pinned || !media) return;
 
     const validHeadlineEls = headlineRefs.current.filter(Boolean) as HTMLSpanElement[];
     const contentEls = [
@@ -53,71 +55,50 @@ const HeroSection = () => {
         .to(paginationRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.7 }, "-=0.25")
         .to(scrollIndicatorRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.8 }, "-=0.2");
 
-      // ── Scroll-driven exit animations (first 15% of section scroll) ──
+      // ── Scroll-driven: frame sequence + exit animations ──
       const masterTl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
           start: "top top",
           end: "bottom bottom",
-          scrub: 0.6,
+          scrub: 0.3,
+          onUpdate: (self) => {
+            // Drive the canvas frame sequence from scroll progress
+            setProgress(self.progress);
+          },
         },
       });
 
+      // Content fade/blur out in first 15%
       masterTl.to(validHeadlineEls, { y: -40, opacity: 0, filter: "blur(12px)", stagger: 0.02, ease: "power2.in", duration: 0.15 }, 0);
       masterTl.to(subtitleRef.current, { y: -30, opacity: 0, filter: "blur(8px)", ease: "power2.in", duration: 0.15 }, 0);
       masterTl.to(ctaRef.current, { y: -20, opacity: 0, filter: "blur(8px)", ease: "power2.in", duration: 0.15 }, 0.02);
       masterTl.to(paginationRef.current, { x: 18, opacity: 0, filter: "blur(6px)", ease: "power2.in", duration: 0.15 }, 0.02);
       masterTl.to(scrollIndicatorRef.current, { opacity: 0, filter: "blur(6px)", ease: "power2.in", duration: 0.1 }, 0);
+
+      // Media blur/zoom in second half
       masterTl.to(media, { scale: 1.06, filter: "blur(2px)", opacity: 0.6, ease: "power2.inOut", duration: 0.5 }, 0.5);
     }, section);
 
-    // ── Video scrub (depends on video metadata) ──
-    let videoCtx: gsap.Context | null = null;
-    const setupVideoScrub = () => {
-      const dur = video.duration;
-      if (!dur || !isFinite(dur)) return;
-      video.pause();
-
-      videoCtx = gsap.context(() => {
-        gsap.to(video, {
-          currentTime: dur,
-          ease: "none",
-          scrollTrigger: {
-            trigger: section,
-            start: "top top",
-            end: "bottom bottom",
-            scrub: 0.6,
-          },
-        });
-      }, section);
-    };
-
-    if (video.readyState >= 1) {
-      setupVideoScrub();
-    } else {
-      video.addEventListener("loadedmetadata", setupVideoScrub, { once: true });
-    }
-
     return () => {
       ctx.revert();
-      videoCtx?.revert();
-      video.removeEventListener("loadedmetadata", setupVideoScrub);
     };
-  }, []);
+  }, [setProgress]);
 
   return (
     <section ref={sectionRef} className="relative h-[500vh] bg-background">
       <div ref={pinnedRef} className="sticky top-0 h-screen w-full overflow-hidden bg-background">
         <div ref={mediaRef} className="absolute inset-0 origin-center">
-          <video
-            ref={videoRef}
+          <canvas
+            ref={canvasRef}
             className="h-full w-full object-cover"
-            src="/hero-video.mp4"
-            muted
-            playsInline
-            preload="auto"
             aria-hidden="true"
+            style={{ display: loaded ? "block" : "none" }}
           />
+          {/* Loading placeholder */}
+          {!loaded && (
+            <div className="h-full w-full bg-background" />
+          )}
           <div
             className="absolute inset-0"
             style={{
