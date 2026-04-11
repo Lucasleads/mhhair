@@ -44,41 +44,35 @@ const HeroSection = () => {
       gsap.set(contentEls, { y: 60, opacity: 0, filter: "blur(12px)" });
       gsap.set(media, { willChange: "transform, opacity, filter" });
 
-      // ── Pin the hero for the full 500vh scroll depth ──
-      ScrollTrigger.create({
-        trigger: section,
-        start: "top top",
-        end: "bottom bottom",
-        pin: pinned,
-      });
-
       // ── Intro animation (on load) ──
       const introTl = gsap.timeline({ defaults: { ease: "power3.out" }, delay: 0.2 });
       introTl
-        .to(validHeadlineEls, {
-          y: 0, opacity: 1, filter: "blur(0px)", duration: 1, stagger: 0.12,
-        })
+        .to(validHeadlineEls, { y: 0, opacity: 1, filter: "blur(0px)", duration: 1, stagger: 0.12 })
         .to(subtitleRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.8 }, "-=0.45")
         .to(ctaRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.7 }, "-=0.35")
         .to(paginationRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.7 }, "-=0.25")
         .to(scrollIndicatorRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.8 }, "-=0.2");
 
-      // ── Scroll exit: content fades/blurs out in first ~400px ──
-      const exitTl = gsap.timeline({
+      // ── Master timeline: pin + exit animations + video scrub ──
+      const masterTl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: "+=400",
+          end: "bottom bottom",
+          pin: pinned,
           scrub: 0.6,
         },
       });
 
-      exitTl.to(validHeadlineEls, { y: -40, opacity: 0, filter: "blur(12px)", stagger: 0.02, ease: "power2.in" }, 0);
-      exitTl.to(subtitleRef.current, { y: -30, opacity: 0, filter: "blur(8px)", ease: "power2.in" }, 0);
-      exitTl.to(ctaRef.current, { y: -20, opacity: 0, filter: "blur(8px)", ease: "power2.in" }, 0.02);
-      exitTl.to(paginationRef.current, { x: 18, opacity: 0, filter: "blur(6px)", ease: "power2.in" }, 0.02);
-      exitTl.to(scrollIndicatorRef.current, { opacity: 0, filter: "blur(6px)", ease: "power2.in" }, 0.01);
-      exitTl.to(media, { scale: 1.06, filter: "blur(2px)", opacity: 0.6, ease: "power2.inOut" }, 0.3);
+      // Content fade/blur out in first 15% of scroll
+      masterTl.to(validHeadlineEls, { y: -40, opacity: 0, filter: "blur(12px)", stagger: 0.02, ease: "power2.in", duration: 0.15 }, 0);
+      masterTl.to(subtitleRef.current, { y: -30, opacity: 0, filter: "blur(8px)", ease: "power2.in", duration: 0.15 }, 0);
+      masterTl.to(ctaRef.current, { y: -20, opacity: 0, filter: "blur(8px)", ease: "power2.in", duration: 0.15 }, 0.02);
+      masterTl.to(paginationRef.current, { x: 18, opacity: 0, filter: "blur(6px)", ease: "power2.in", duration: 0.15 }, 0.02);
+      masterTl.to(scrollIndicatorRef.current, { opacity: 0, filter: "blur(6px)", ease: "power2.in", duration: 0.1 }, 0);
+
+      // Media blur/zoom in second half
+      masterTl.to(media, { scale: 1.06, filter: "blur(2px)", opacity: 0.6, ease: "power2.inOut", duration: 0.5 }, 0.5);
     }, section);
 
     // ── Video scrub (depends on video metadata) ──
@@ -89,14 +83,16 @@ const HeroSection = () => {
       video.pause();
 
       videoCtx = gsap.context(() => {
-        gsap.timeline({
+        gsap.to(video, {
+          currentTime: dur,
+          ease: "none",
           scrollTrigger: {
             trigger: section,
             start: "top top",
             end: "bottom bottom",
             scrub: 0.6,
           },
-        }).to(video, { currentTime: dur, ease: "none" }, 0);
+        });
       }, section);
     };
 
