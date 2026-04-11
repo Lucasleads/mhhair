@@ -136,7 +136,7 @@ const HeroSection = () => {
                   {line.highlight ? (
                     <>
                       {line.text.split(line.highlight)[0]}
-                      <span className="text-ocre">{line.highlight}</span>
+                      <span className={line.highlightClass || "text-ocre"}>{line.highlight}</span>
                       {line.text.split(line.highlight)[1]}
                     </>
                   ) : line.text}
