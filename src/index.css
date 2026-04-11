@@ -78,7 +78,16 @@
 
 @layer components {
   .neon-glow {
-    text-shadow: 0 0 8px hsl(216 76% 32% / 0.6), 0 0 20px hsl(216 76% 32% / 0.4), 0 0 40px hsl(216 76% 32% / 0.2);
+    animation: neon-pulse 2.5s ease-in-out infinite;
+  }
+
+  @keyframes neon-pulse {
+    0%, 100% {
+      text-shadow: 0 0 8px hsl(216 76% 32% / 0.6), 0 0 20px hsl(216 76% 32% / 0.4), 0 0 40px hsl(216 76% 32% / 0.2);
+    }
+    50% {
+      text-shadow: 0 0 12px hsl(216 76% 42% / 0.8), 0 0 30px hsl(216 76% 42% / 0.6), 0 0 60px hsl(216 76% 42% / 0.3), 0 0 80px hsl(216 76% 42% / 0.15);
+    }
   }
 
   .product-glossy {
