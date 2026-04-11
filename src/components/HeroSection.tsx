@@ -44,7 +44,15 @@ const HeroSection = () => {
       gsap.set(contentEls, { y: 60, opacity: 0, filter: "blur(12px)" });
       gsap.set(media, { willChange: "transform, opacity, filter" });
 
-      // ── Intro animation (on load, independent of video) ──
+      // ── Pin the hero for the full 500vh scroll depth ──
+      ScrollTrigger.create({
+        trigger: section,
+        start: "top top",
+        end: "bottom bottom",
+        pin: pinned,
+      });
+
+      // ── Intro animation (on load) ──
       const introTl = gsap.timeline({ defaults: { ease: "power3.out" }, delay: 0.2 });
       introTl
         .to(validHeadlineEls, {
@@ -55,7 +63,7 @@ const HeroSection = () => {
         .to(paginationRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.7 }, "-=0.25")
         .to(scrollIndicatorRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.8 }, "-=0.2");
 
-      // ── Scroll exit: content fades/blurs out ──
+      // ── Scroll exit: content fades/blurs out in first ~400px ──
       const exitTl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
@@ -65,59 +73,31 @@ const HeroSection = () => {
         },
       });
 
-      exitTl.to(
-        validHeadlineEls,
-        { y: -40, opacity: 0, filter: "blur(12px)", stagger: 0.02, ease: "power2.in" },
-        0,
-      );
-      exitTl.to(
-        subtitleRef.current,
-        { y: -30, opacity: 0, filter: "blur(8px)", ease: "power2.in" },
-        0,
-      );
-      exitTl.to(
-        ctaRef.current,
-        { y: -20, opacity: 0, filter: "blur(8px)", ease: "power2.in" },
-        0.02,
-      );
-      exitTl.to(
-        paginationRef.current,
-        { x: 18, opacity: 0, filter: "blur(6px)", ease: "power2.in" },
-        0.02,
-      );
-      exitTl.to(
-        scrollIndicatorRef.current,
-        { opacity: 0, filter: "blur(6px)", ease: "power2.in" },
-        0.01,
-      );
-
-      // Subtle media effects during scroll
-      exitTl.to(
-        media,
-        { scale: 1.06, filter: "blur(2px)", opacity: 0.6, ease: "power2.inOut" },
-        0.3,
-      );
+      exitTl.to(validHeadlineEls, { y: -40, opacity: 0, filter: "blur(12px)", stagger: 0.02, ease: "power2.in" }, 0);
+      exitTl.to(subtitleRef.current, { y: -30, opacity: 0, filter: "blur(8px)", ease: "power2.in" }, 0);
+      exitTl.to(ctaRef.current, { y: -20, opacity: 0, filter: "blur(8px)", ease: "power2.in" }, 0.02);
+      exitTl.to(paginationRef.current, { x: 18, opacity: 0, filter: "blur(6px)", ease: "power2.in" }, 0.02);
+      exitTl.to(scrollIndicatorRef.current, { opacity: 0, filter: "blur(6px)", ease: "power2.in" }, 0.01);
+      exitTl.to(media, { scale: 1.06, filter: "blur(2px)", opacity: 0.6, ease: "power2.inOut" }, 0.3);
     }, section);
 
     // ── Video scrub (depends on video metadata) ──
+    let videoCtx: gsap.Context | null = null;
     const setupVideoScrub = () => {
-      const duration = video.duration;
-      if (!duration || !isFinite(duration)) return;
+      const dur = video.duration;
+      if (!dur || !isFinite(dur)) return;
       video.pause();
 
-      const videoCtx = gsap.context(() => {
+      videoCtx = gsap.context(() => {
         gsap.timeline({
           scrollTrigger: {
             trigger: section,
             start: "top top",
             end: "bottom bottom",
-            pin: pinned,
             scrub: 0.6,
           },
-        }).to(video, { currentTime: duration, ease: "none" }, 0);
+        }).to(video, { currentTime: dur, ease: "none" }, 0);
       }, section);
-
-      (section as any).__gsapVideoCtx = videoCtx;
     };
 
     if (video.readyState >= 1) {
@@ -128,7 +108,7 @@ const HeroSection = () => {
 
     return () => {
       ctx.revert();
-      (section as any).__gsapVideoCtx?.revert();
+      videoCtx?.revert();
       video.removeEventListener("loadedmetadata", setupVideoScrub);
     };
   }, []);
