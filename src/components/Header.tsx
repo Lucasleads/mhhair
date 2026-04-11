@@ -111,7 +111,8 @@ const Header = () => {
           </div>
         </div>
       )}
-    </header>
+      </header>
+    </>
   );
 };
 
