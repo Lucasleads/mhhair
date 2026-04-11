@@ -18,14 +18,26 @@ const Header = () => {
   }, []);
 
   return (
-    <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-        scrolled
-          ? "bg-background/80 backdrop-blur-xl border-b border-border/40 py-3"
-          : "bg-transparent py-5"
-      }`}
-    >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
+    <>
+      {/* Red trust banner */}
+      <div className="fixed top-0 left-0 w-full z-[60] bg-destructive text-destructive-foreground">
+        <div className="max-w-7xl mx-auto px-4 py-1.5 flex items-center justify-center gap-4 md:gap-8 text-[10px] md:text-xs font-body font-bold uppercase tracking-[0.15em]">
+          <span>🚚 Frete Grátis para Todo Brasil</span>
+          <span className="hidden sm:inline">•</span>
+          <span className="hidden sm:inline">⚡ Entrega Rápida</span>
+          <span className="hidden sm:inline">•</span>
+          <span className="hidden sm:inline">🛡️ Garantia de 180 Dias</span>
+        </div>
+      </div>
+
+      <header
+        className={`fixed top-[30px] left-0 w-full z-50 transition-all duration-500 ${
+          scrolled
+            ? "bg-background/80 backdrop-blur-xl border-b border-border/40 py-3"
+            : "bg-transparent py-5"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
         <a href="#" className="flex items-center gap-2 group">
           <span className="w-8 h-8 rounded-full bg-ocre flex items-center justify-center text-ocre-foreground font-heading font-bold text-sm group-hover:scale-110 transition-transform">
@@ -99,7 +111,8 @@ const Header = () => {
           </div>
         </div>
       )}
-    </header>
+      </header>
+    </>
   );
 };
 
