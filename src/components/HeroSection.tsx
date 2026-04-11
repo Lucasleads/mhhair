@@ -7,8 +7,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 const headlineLines = [
   { text: "A Perfumação de Luxo", outline: false, highlight: null },
-  { text: "que Protege seu Equipamento", outline: false, highlight: "Protege" },
-  { text: "Essências Profissionais", outline: false, highlight: "Essências Profissionais", highlightClass: "text-primary" },
+  { text: "que Protege seu Equipamento", outline: false, highlight: "Protege", highlightClass: "text-primary neon-glow" },
+  { text: "Essências Profissionais", outline: false, highlight: "Essências Profissionais", highlightClass: "text-primary neon-glow" },
   { text: "com Nanotecnologia.", outline: false, highlight: null },
 ];
 
