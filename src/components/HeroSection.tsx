@@ -130,7 +130,7 @@ const HeroSection = () => {
                   style={
                     line.outline
                       ? { WebkitTextStroke: "1px hsl(var(--foreground))" }
-                      : undefined
+                      : { color: "#0a0a0a" }
                   }
                 >
                   {line.text}
