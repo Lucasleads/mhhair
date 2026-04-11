@@ -20,7 +20,7 @@ const Header = () => {
   return (
     <>
       {/* Red trust banner */}
-      <div className="fixed top-0 left-0 w-full z-[60] bg-primary text-primary-foreground">
+      <div className="fixed top-0 left-0 w-full z-[60] bg-ocre text-ocre-foreground">
         <div className="max-w-7xl mx-auto px-4 py-1.5 flex items-center justify-center gap-4 md:gap-8 text-[10px] md:text-xs font-body font-bold uppercase tracking-[0.15em]">
           <span>🚚 Frete Grátis para Todo Brasil</span>
           <span className="hidden sm:inline">•</span>
