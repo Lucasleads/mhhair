@@ -197,7 +197,7 @@ const HeroSection = () => {
 
         <div
           ref={scrollIndicatorRef}
-          className="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-1 xl:flex"
+          className="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-1 2xl:flex"
         >
           <span className="font-body text-xs font-bold uppercase tracking-[0.25em] text-ocre">
             Descobrir Agora
