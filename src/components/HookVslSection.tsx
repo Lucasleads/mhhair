@@ -49,6 +49,21 @@ const HookVslSection = () => {
           </video>
         </div>
 
+        {/* Badge 25 anos */}
+        <div className="hook-animate flex flex-col items-center mb-10">
+          <div className="inline-flex items-center gap-3 rounded-full border border-ocre/30 bg-ocre/10 px-6 py-3 mb-3 shadow-sm">
+            <span className="flex items-center justify-center w-10 h-10 rounded-full bg-ocre text-ocre-foreground font-heading font-bold text-sm">
+              25
+            </span>
+            <span className="font-body text-sm md:text-base font-bold text-foreground">
+              Anos de Experiência Internacional
+            </span>
+          </div>
+          <p className="font-body text-sm md:text-base text-muted-foreground italic max-w-lg">
+            "Você não está comprando apenas uma essência. Você está utilizando um produto desenvolvido por <span className="text-foreground font-semibold not-italic">especialistas</span>."
+          </p>
+        </div>
+
         {/* Value props */}
         <div className="hook-animate max-w-2xl mx-auto mb-10">
           <p className="font-body text-base md:text-lg text-muted-foreground leading-relaxed mb-6">
