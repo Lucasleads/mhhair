@@ -152,7 +152,7 @@ const HeroSection = () => {
               ref={subtitleRef}
               className="mb-6 max-w-sm font-body text-sm leading-relaxed text-foreground md:text-base"
             >
-              Descubra o segredo dos maiores hotéis e clínicas do mundo. Projeção intensa,
+              <span className="font-bold text-ocre">Descubra o segredo</span> dos maiores hotéis e clínicas do mundo. Projeção intensa,
               rendimento superior e 180 dias de garantia total.
             </p>
 
