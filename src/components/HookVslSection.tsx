@@ -50,12 +50,18 @@ const HookVslSection = () => {
         </div>
 
         {/* CTA */}
-        <div className="hook-animate">
+        <div className="hook-animate flex justify-center">
           <a
             href="#kits"
-            className="inline-flex items-center justify-center rounded-full bg-ocre px-8 py-4 font-body text-sm font-bold uppercase tracking-widest text-ocre-foreground shadow-[var(--shadow-ocre)] transition-all hover:scale-105 hover:shadow-[0_12px_32px_hsl(38_72%_55%/0.5)]"
+            className="group relative inline-flex items-center justify-center rounded-full bg-ocre px-10 py-5 font-body text-base font-bold uppercase tracking-widest text-ocre-foreground shadow-[var(--shadow-ocre)] transition-all hover:scale-105 hover:shadow-[0_12px_32px_hsl(38_72%_55%/0.5)]"
           >
-            Quero Minha Essência Profissional
+            {/* Pulse ring 1 */}
+            <span className="absolute inset-0 rounded-full animate-[cta-ping_2s_ease-out_infinite] border-2 border-ocre opacity-0" />
+            {/* Pulse ring 2 */}
+            <span className="absolute inset-0 rounded-full animate-[cta-ping_2s_ease-out_0.6s_infinite] border-2 border-ocre opacity-0" />
+            {/* Glow */}
+            <span className="absolute inset-0 rounded-full animate-[cta-glow_2s_ease-in-out_infinite] bg-ocre/20 blur-md" />
+            <span className="relative z-10">Quero Minha Essência Profissional</span>
           </a>
         </div>
       </div>
