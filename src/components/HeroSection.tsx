@@ -131,7 +131,7 @@ const HeroSection = () => {
 
         <div className="relative z-10 flex h-full flex-col justify-center px-6 pt-28 pb-24 md:px-12 md:pt-32 md:pb-20 lg:px-16">
           <div className="max-w-xl">
-            <div ref={badgeRef} className="mb-6 inline-flex items-center gap-2 rounded-full border border-ocre/30 bg-ocre/10 px-5 py-2.5 backdrop-blur-sm">
+            <div ref={badgeRef} className="mb-4 md:mb-6 inline-flex items-center gap-2 rounded-full border border-ocre/30 bg-ocre/10 px-4 py-2 md:px-5 md:py-2.5 backdrop-blur-sm">
               <span className="relative flex h-2.5 w-2.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ocre opacity-75"></span>
                 <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-ocre"></span>
@@ -147,7 +147,7 @@ const HeroSection = () => {
                   ref={(element) => {
                     headlineRefs.current[index] = element;
                   }}
-                  className={`block font-heading text-3xl font-bold leading-[0.9] tracking-tight sm:text-4xl md:text-4xl lg:text-5xl xl:text-6xl ${
+                  className={`block font-heading text-3xl font-bold leading-[0.9] tracking-tight sm:text-4xl md:text-4xl lg:text-[3.2rem] xl:text-6xl ${
                     line.outline ? "text-transparent" : "text-foreground"
                   }`}
                   style={
@@ -163,7 +163,7 @@ const HeroSection = () => {
 
             <p
               ref={subtitleRef}
-              className="mb-6 max-w-md font-body text-base leading-relaxed text-foreground md:text-xl md:mb-8"
+              className="mb-5 max-w-md font-body text-base leading-relaxed text-foreground md:text-lg md:mb-6"
             >
               <span className="font-bold text-ocre">Descubra o segredo</span> dos maiores hotéis e clínicas do mundo. Projeção intensa,
               rendimento superior e 180 dias de garantia total.
