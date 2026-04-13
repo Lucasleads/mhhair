@@ -93,7 +93,7 @@ const HeroSection = () => {
     <section ref={sectionRef} className="relative h-[500vh] bg-background">
       <div ref={pinnedRef} className="sticky top-0 h-screen w-full overflow-hidden bg-background">
         {/* Top banner */}
-        <div className="absolute top-0 left-0 right-0 z-30 overflow-hidden bg-primary">
+        <div className="absolute top-0 left-0 right-0 z-40 overflow-hidden bg-primary">
           <div className="flex animate-[marquee_18s_linear_infinite] whitespace-nowrap py-2.5">
             {[...Array(3)].map((_, i) => (
               <span key={i} className="mx-8 font-body text-sm font-semibold text-primary-foreground tracking-wide">
@@ -129,9 +129,9 @@ const HeroSection = () => {
           />
         </div>
 
-        <div className="relative z-10 flex h-full flex-col justify-center px-6 pt-16 md:px-12 lg:px-16">
+        <div className="relative z-10 flex h-full flex-col justify-center px-6 pt-28 pb-24 md:px-12 md:pt-32 md:pb-20 lg:px-16">
           <div className="max-w-xl">
-            <div ref={badgeRef} className="mb-6 inline-flex items-center gap-2 rounded-full border border-ocre/30 bg-ocre/10 px-5 py-2.5 backdrop-blur-sm">
+            <div ref={badgeRef} className="mb-4 md:mb-6 inline-flex items-center gap-2 rounded-full border border-ocre/30 bg-ocre/10 px-4 py-2 md:px-5 md:py-2.5 backdrop-blur-sm">
               <span className="relative flex h-2.5 w-2.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ocre opacity-75"></span>
                 <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-ocre"></span>
@@ -140,14 +140,14 @@ const HeroSection = () => {
                 O segredo por trás dos ambientes mais sofisticados do Brasil
               </span>
             </div>
-            <div className="mb-5">
+            <div className="mb-4 md:mb-5">
               {headlineLines.map((line, index) => (
                 <span
                   key={line.text}
                   ref={(element) => {
                     headlineRefs.current[index] = element;
                   }}
-                  className={`block font-heading text-3xl font-bold leading-[0.9] tracking-tight sm:text-4xl md:text-4xl lg:text-5xl xl:text-6xl ${
+                  className={`block font-heading text-3xl font-bold leading-[0.9] tracking-tight sm:text-4xl md:text-4xl lg:text-[3.2rem] xl:text-6xl ${
                     line.outline ? "text-transparent" : "text-foreground"
                   }`}
                   style={
@@ -163,7 +163,7 @@ const HeroSection = () => {
 
             <p
               ref={subtitleRef}
-              className="mb-8 max-w-md font-body text-lg leading-relaxed text-foreground md:text-xl"
+              className="mb-5 max-w-md font-body text-base leading-relaxed text-foreground md:text-lg md:mb-6"
             >
               <span className="font-bold text-ocre">Descubra o segredo</span> dos maiores hotéis e clínicas do mundo. Projeção intensa,
               rendimento superior e 180 dias de garantia total.
@@ -197,13 +197,13 @@ const HeroSection = () => {
 
         <div
           ref={scrollIndicatorRef}
-          className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-2"
+          className="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-1 2xl:flex"
         >
-          <span className="font-body text-sm font-bold uppercase tracking-[0.25em] text-ocre md:text-base">
+          <span className="font-body text-xs font-bold uppercase tracking-[0.25em] text-ocre">
             Descobrir Agora
           </span>
-          <div className="h-6 w-px animate-pulse bg-ocre/50" />
-          <svg className="w-5 h-5 text-ocre animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <div className="h-4 w-px animate-pulse bg-ocre/50" />
+          <svg className="w-4 h-4 text-ocre animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
           </svg>
         </div>
