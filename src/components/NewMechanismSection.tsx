@@ -54,9 +54,6 @@ const NewMechanismSection = () => {
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="text-center mb-14">
-          <p className="mech-animate font-body text-xs uppercase tracking-[0.25em] text-ocre mb-4">
-            O Novo Mecanismo vs. O Velho Jeito
-          </p>
           <h2 className="mech-animate font-heading text-2xl md:text-3xl lg:text-4xl font-bold text-foreground leading-tight max-w-2xl mx-auto">
             Por que essências comuns{" "}
             <span className="text-destructive">estragam</span>{" "}
