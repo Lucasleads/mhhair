@@ -150,7 +150,7 @@ const HeroSection = () => {
 
             <p
               ref={subtitleRef}
-              className="mb-6 max-w-md font-body text-base leading-relaxed text-foreground md:text-lg"
+              className="mb-6 max-w-md font-body text-lg leading-relaxed text-foreground md:text-xl"
             >
               <span className="font-bold text-ocre">Descubra o segredo</span> dos maiores hotéis e clínicas do mundo. Projeção intensa,
               rendimento superior e 180 dias de garantia total.
