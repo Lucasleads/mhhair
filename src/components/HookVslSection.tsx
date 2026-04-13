@@ -6,6 +6,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const HookVslSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -20,6 +21,23 @@ const HookVslSection = () => {
       });
     }, sectionRef);
     return () => ctx.revert();
+  }, []);
+
+  // Autoplay video when section enters viewport
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.muted = true;
+          video.play().catch(() => {});
+        }
+      },
+      { threshold: 0.4 }
+    );
+    observer.observe(video);
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -58,9 +76,12 @@ const HookVslSection = () => {
           <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-br from-ocre via-primary to-ocre opacity-50" />
           <div className="relative rounded-xl overflow-hidden shadow-[0_20px_60px_-12px_hsl(38_72%_55%/0.4)] bg-background">
             <video
+              ref={videoRef}
               className="w-full rounded-xl cursor-pointer"
               controls
-              preload="metadata"
+              muted
+              playsInline
+              preload="auto"
               poster=""
             >
               <source src="/videos/vsl.mp4" type="video/mp4" />
