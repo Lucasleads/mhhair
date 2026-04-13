@@ -5,22 +5,17 @@ import { MessageCircle, Users, UserCheck, Headphones } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const supportCards = [
-  {
-    icon: MessageCircle,
-    title: "WhatsApp Direto",
-    desc: "Atendimento rápido e humanizado pelo WhatsApp. Sem robôs, sem espera. Fale com quem entende do assunto.",
-  },
-  {
-    icon: Users,
-    title: "Consultoria Especializada",
-    desc: "Nossa equipe te ajuda a escolher a fragrância ideal para o seu ambiente e tipo de negócio.",
-  },
-  {
-    icon: UserCheck,
-    title: "Gerente Dedicado",
-    desc: "Clientes do Clube de Assinatura contam com um gerente exclusivo para acompanhar cada detalhe.",
-  },
+const accessItems = [
+  { icon: MessageCircle, text: "WhatsApp com especialistas" },
+  { icon: Users, text: "Consultores em aromatização" },
+  { icon: UserCheck, text: "Gerente olfativo dedicado" },
+];
+
+const benefitItems = [
+  "Orientar uso",
+  "Ajustar intensidade",
+  "Recomendar fragrâncias",
+  "Resolver qualquer dúvida",
 ];
 
 const SupportSection = () => {
