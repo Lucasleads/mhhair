@@ -134,7 +134,7 @@ const HeroSection = () => {
                   ref={(element) => {
                     headlineRefs.current[index] = element;
                   }}
-                  className={`block font-heading text-xl font-bold leading-[0.85] tracking-tight sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl ${
+                  className={`block font-heading text-2xl font-bold leading-[0.85] tracking-tight sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl ${
                     line.outline ? "text-transparent" : "text-foreground"
                   }`}
                   style={
@@ -150,7 +150,7 @@ const HeroSection = () => {
 
             <p
               ref={subtitleRef}
-              className="mb-6 max-w-sm font-body text-sm leading-relaxed text-foreground md:text-base"
+              className="mb-6 max-w-md font-body text-base leading-relaxed text-foreground md:text-lg"
             >
               <span className="font-bold text-ocre">Descubra o segredo</span> dos maiores hotéis e clínicas do mundo. Projeção intensa,
               rendimento superior e 180 dias de garantia total.
