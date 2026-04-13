@@ -1,37 +1,49 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 
 const TOTAL_FRAMES = 96;
+const MOBILE_FRAMES = 32; // Fewer frames on mobile for performance
 const FRAME_PATH = "/hero-frames/frame-";
 const FRAME_EXT = ".webp";
 
+function isMobile() {
+  return window.innerWidth < 768;
+}
+
 /**
  * Apple-style image-sequence hook.
- * Pre-loads all frames into Image objects, then draws the correct one
- * on a <canvas> based on a 0-1 progress value.
+ * On mobile, loads fewer frames (every 3rd) for smoother performance.
  */
 export function useFrameSequence(
   canvasRef: React.RefObject<HTMLCanvasElement | null>,
 ) {
   const imagesRef = useRef<HTMLImageElement[]>([]);
+  const frameMapRef = useRef<number[]>([]);
   const [loaded, setLoaded] = useState(false);
   const currentIndexRef = useRef(0);
   const rafRef = useRef<number>(0);
 
-  // Pre-load all frames
+  // Pre-load frames
   useEffect(() => {
     let cancelled = false;
+    const mobile = isMobile();
+    const totalToLoad = mobile ? MOBILE_FRAMES : TOTAL_FRAMES;
+    const step = mobile ? Math.floor(TOTAL_FRAMES / MOBILE_FRAMES) : 1;
+
     const images: HTMLImageElement[] = [];
+    const frameMap: number[] = [];
     let count = 0;
 
-    for (let i = 1; i <= TOTAL_FRAMES; i++) {
+    for (let i = 0; i < totalToLoad; i++) {
+      const frameNum = Math.min(i * step + 1, TOTAL_FRAMES);
+      frameMap.push(frameNum);
       const img = new Image();
-      img.src = `${FRAME_PATH}${String(i).padStart(3, "0")}${FRAME_EXT}`;
+      img.src = `${FRAME_PATH}${String(frameNum).padStart(3, "0")}${FRAME_EXT}`;
       img.onload = () => {
         count++;
-        if (count === TOTAL_FRAMES && !cancelled) {
+        if (count === totalToLoad && !cancelled) {
           imagesRef.current = images;
+          frameMapRef.current = frameMap;
           setLoaded(true);
-          // Draw first frame immediately
           drawFrame(0);
         }
       };
@@ -56,8 +68,9 @@ export function useFrameSequence(
       const img = images[index];
       if (!img) return;
 
-      // Match canvas size to its display size for crisp rendering
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      // Lower DPR on mobile for performance
+      const mobile = isMobile();
+      const dpr = mobile ? 1 : Math.min(window.devicePixelRatio || 1, 2);
       const rect = canvas.getBoundingClientRect();
       const w = rect.width * dpr;
       const h = rect.height * dpr;
@@ -93,9 +106,10 @@ export function useFrameSequence(
   const setProgress = useCallback(
     (progress: number) => {
       const clamped = Math.max(0, Math.min(1, progress));
+      const totalFrames = imagesRef.current.length || 1;
       const index = Math.min(
-        Math.floor(clamped * TOTAL_FRAMES),
-        TOTAL_FRAMES - 1,
+        Math.floor(clamped * totalFrames),
+        totalFrames - 1,
       );
 
       if (index !== currentIndexRef.current) {
