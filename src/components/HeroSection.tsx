@@ -35,19 +35,25 @@ const HeroSection = () => {
       paginationRef.current,
     ].filter(Boolean) as HTMLElement[];
 
+    const mobile = window.innerWidth < 768;
+
     const ctx = gsap.context(() => {
-      gsap.set(contentEls, { y: 50, opacity: 0, filter: "blur(10px)" });
-      gsap.set(media, { willChange: "transform, opacity, filter" });
+      // On mobile, skip blur filters entirely (expensive composite operations)
+      const blurIn = mobile ? "blur(0px)" : "blur(10px)";
+      const blurClear = "blur(0px)";
+
+      gsap.set(contentEls, { y: 40, opacity: 0, ...(mobile ? {} : { filter: blurIn }) });
+      gsap.set(media, { willChange: "transform, opacity" });
 
       // Intro
       const introTl = gsap.timeline({ defaults: { ease: "power3.out" }, delay: 0.3 });
       introTl
-        .to(badgeRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.7 })
-        .to(headlineRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.9 }, "-=0.4")
-        .to(subtitleRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.7 }, "-=0.35")
-        .to(ctaRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.6 }, "-=0.3")
-        .to(scrollIndicatorRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.7 }, "-=0.2")
-        .to(paginationRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.6 }, "-=0.3");
+        .to(badgeRef.current, { y: 0, opacity: 1, ...(mobile ? {} : { filter: blurClear }), duration: 0.5 })
+        .to(headlineRef.current, { y: 0, opacity: 1, ...(mobile ? {} : { filter: blurClear }), duration: 0.6 }, "-=0.3")
+        .to(subtitleRef.current, { y: 0, opacity: 1, ...(mobile ? {} : { filter: blurClear }), duration: 0.5 }, "-=0.25")
+        .to(ctaRef.current, { y: 0, opacity: 1, ...(mobile ? {} : { filter: blurClear }), duration: 0.4 }, "-=0.2")
+        .to(scrollIndicatorRef.current, { y: 0, opacity: 1, duration: 0.4 }, "-=0.15")
+        .to(paginationRef.current, { y: 0, opacity: 1, duration: 0.4 }, "-=0.2");
 
       // Scroll-driven
       const masterTl = gsap.timeline({
@@ -55,18 +61,28 @@ const HeroSection = () => {
           trigger: section,
           start: "top top",
           end: "bottom bottom",
-          scrub: 0.3,
+          scrub: mobile ? 0.6 : 0.3, // Smoother scrub on mobile
           onUpdate: (self) => setProgress(self.progress),
         },
       });
 
-      masterTl.to(badgeRef.current, { y: -40, opacity: 0, filter: "blur(12px)", ease: "power2.in", duration: 0.15 }, 0);
-      masterTl.to(headlineRef.current, { y: -40, opacity: 0, filter: "blur(12px)", ease: "power2.in", duration: 0.15 }, 0);
-      masterTl.to(subtitleRef.current, { y: -30, opacity: 0, filter: "blur(8px)", ease: "power2.in", duration: 0.15 }, 0);
-      masterTl.to(ctaRef.current, { y: -20, opacity: 0, filter: "blur(8px)", ease: "power2.in", duration: 0.15 }, 0.02);
-      masterTl.to(scrollIndicatorRef.current, { opacity: 0, filter: "blur(6px)", ease: "power2.in", duration: 0.1 }, 0);
-      masterTl.to(paginationRef.current, { x: 18, opacity: 0, filter: "blur(6px)", ease: "power2.in", duration: 0.15 }, 0.02);
-      masterTl.to(media, { scale: 1.06, filter: "blur(2px)", opacity: 0.6, ease: "power2.inOut", duration: 0.5 }, 0.5);
+      // On mobile, only animate opacity (no blur, no filter)
+      if (mobile) {
+        masterTl.to(badgeRef.current, { y: -30, opacity: 0, ease: "power2.in", duration: 0.15 }, 0);
+        masterTl.to(headlineRef.current, { y: -30, opacity: 0, ease: "power2.in", duration: 0.15 }, 0);
+        masterTl.to(subtitleRef.current, { y: -20, opacity: 0, ease: "power2.in", duration: 0.15 }, 0);
+        masterTl.to(ctaRef.current, { y: -15, opacity: 0, ease: "power2.in", duration: 0.15 }, 0.02);
+        masterTl.to(scrollIndicatorRef.current, { opacity: 0, duration: 0.1 }, 0);
+        masterTl.to(media, { scale: 1.03, opacity: 0.7, ease: "power2.inOut", duration: 0.5 }, 0.5);
+      } else {
+        masterTl.to(badgeRef.current, { y: -40, opacity: 0, filter: "blur(12px)", ease: "power2.in", duration: 0.15 }, 0);
+        masterTl.to(headlineRef.current, { y: -40, opacity: 0, filter: "blur(12px)", ease: "power2.in", duration: 0.15 }, 0);
+        masterTl.to(subtitleRef.current, { y: -30, opacity: 0, filter: "blur(8px)", ease: "power2.in", duration: 0.15 }, 0);
+        masterTl.to(ctaRef.current, { y: -20, opacity: 0, filter: "blur(8px)", ease: "power2.in", duration: 0.15 }, 0.02);
+        masterTl.to(scrollIndicatorRef.current, { opacity: 0, filter: "blur(6px)", ease: "power2.in", duration: 0.1 }, 0);
+        masterTl.to(paginationRef.current, { x: 18, opacity: 0, filter: "blur(6px)", ease: "power2.in", duration: 0.15 }, 0.02);
+        masterTl.to(media, { scale: 1.06, filter: "blur(2px)", opacity: 0.6, ease: "power2.inOut", duration: 0.5 }, 0.5);
+      }
     }, section);
 
     return () => ctx.revert();
