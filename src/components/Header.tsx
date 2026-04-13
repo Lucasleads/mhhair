@@ -19,19 +19,8 @@ const Header = () => {
 
   return (
     <>
-      {/* Red trust banner */}
-      <div className="fixed top-0 left-0 w-full z-[60] bg-ocre text-ocre-foreground">
-        <div className="max-w-7xl mx-auto px-4 py-2 flex items-center justify-center gap-4 md:gap-8 text-xs md:text-base font-body font-bold uppercase tracking-[0.15em]">
-          <span>🚚 Frete Grátis para Todo Brasil</span>
-          <span className="hidden sm:inline">•</span>
-          <span className="hidden sm:inline">⚡ Entrega Rápida</span>
-          <span className="hidden sm:inline">•</span>
-          <span className="hidden sm:inline">🛡️ Garantia de 180 Dias</span>
-        </div>
-      </div>
-
       <header
-        className={`fixed top-[30px] left-0 w-full z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
           scrolled
             ? "bg-background/80 backdrop-blur-xl border-b border-border/40 py-3"
             : "bg-transparent py-5"
