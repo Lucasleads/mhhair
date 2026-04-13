@@ -9,6 +9,7 @@ import OlfactiveConnectionSection from "@/components/OlfactiveConnectionSection"
 import GuaranteeSection from "@/components/GuaranteeSection";
 import FaqSection from "@/components/FaqSection";
 import FinalCtaSection from "@/components/FinalCtaSection";
+import SupportSection from "@/components/SupportSection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -25,6 +26,7 @@ const Index = () => {
       <GuaranteeSection />
       <FaqSection />
       <FinalCtaSection />
+      <SupportSection />
       <Footer />
     </main>
   );
