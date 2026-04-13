@@ -51,13 +51,18 @@ const HookVslSection = () => {
 
         {/* Badge 25 anos */}
         <div className="hook-animate flex flex-col items-center mb-10">
-          <div className="inline-flex items-center gap-3 rounded-full border border-ocre/30 bg-ocre/10 px-6 py-3 mb-3 shadow-sm">
-            <span className="flex items-center justify-center w-10 h-10 rounded-full bg-ocre text-ocre-foreground font-heading font-bold text-sm">
+          <div className="inline-flex items-center gap-4 rounded-2xl border-2 border-ocre/40 bg-ocre/10 px-7 py-4 mb-4 shadow-[var(--shadow-ocre)] backdrop-blur-sm">
+            <span className="flex items-center justify-center w-16 h-16 rounded-full bg-ocre text-ocre-foreground font-heading font-extrabold text-3xl shadow-lg ring-4 ring-ocre/20">
               25
             </span>
-            <span className="font-body text-sm md:text-base font-bold text-foreground">
-              Anos de Experiência Internacional
-            </span>
+            <div className="text-left">
+              <span className="font-heading text-lg md:text-xl font-bold text-foreground block leading-tight">
+                Anos de Experiência
+              </span>
+              <span className="font-body text-sm text-ocre font-semibold uppercase tracking-wider">
+                Internacional
+              </span>
+            </div>
           </div>
           <p className="font-body text-sm md:text-base text-muted-foreground italic max-w-lg">
             "Você não está comprando apenas uma essência. Você está utilizando um produto desenvolvido por <span className="text-foreground font-semibold not-italic">especialistas</span>."
