@@ -5,19 +5,12 @@ import { useFrameSequence } from "@/hooks/useFrameSequence";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const headlineLines = [
-  { text: "A Perfumação de Luxo", outline: false, highlight: null },
-  { text: "que Protege seu Equipamento", outline: false, highlight: null },
-  { text: "Essências Profissionais", outline: false, highlight: null },
-  { text: "com Nanotecnologia.", outline: false, highlight: null },
-];
-
 const HeroSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const pinnedRef = useRef<HTMLDivElement>(null);
   const mediaRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const headlineRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const headlineRef = useRef<HTMLDivElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const badgeRef = useRef<HTMLDivElement>(null);
@@ -33,65 +26,55 @@ const HeroSection = () => {
 
     if (!section || !pinned || !media) return;
 
-    const validHeadlineEls = headlineRefs.current.filter(Boolean) as HTMLSpanElement[];
     const contentEls = [
       badgeRef.current,
-      ...validHeadlineEls,
+      headlineRef.current,
       subtitleRef.current,
       ctaRef.current,
-      paginationRef.current,
       scrollIndicatorRef.current,
+      paginationRef.current,
     ].filter(Boolean) as HTMLElement[];
 
     const ctx = gsap.context(() => {
-      // ── Set initial hidden state ──
-      gsap.set(contentEls, { y: 60, opacity: 0, filter: "blur(12px)" });
+      gsap.set(contentEls, { y: 50, opacity: 0, filter: "blur(10px)" });
       gsap.set(media, { willChange: "transform, opacity, filter" });
 
-      // ── Intro animation (on load) ──
-      const introTl = gsap.timeline({ defaults: { ease: "power3.out" }, delay: 0.2 });
+      // Intro
+      const introTl = gsap.timeline({ defaults: { ease: "power3.out" }, delay: 0.3 });
       introTl
-        .to(badgeRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.8 })
-        .to(validHeadlineEls, { y: 0, opacity: 1, filter: "blur(0px)", duration: 1, stagger: 0.12 }, "-=0.5")
-        .to(subtitleRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.8 }, "-=0.45")
-        .to(ctaRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.7 }, "-=0.35")
-        .to(paginationRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.7 }, "-=0.25")
-        .to(scrollIndicatorRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.8 }, "-=0.2");
+        .to(badgeRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.7 })
+        .to(headlineRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.9 }, "-=0.4")
+        .to(subtitleRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.7 }, "-=0.35")
+        .to(ctaRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.6 }, "-=0.3")
+        .to(scrollIndicatorRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.7 }, "-=0.2")
+        .to(paginationRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.6 }, "-=0.3");
 
-      // ── Scroll-driven: frame sequence + exit animations ──
+      // Scroll-driven
       const masterTl = gsap.timeline({
         scrollTrigger: {
           trigger: section,
           start: "top top",
           end: "bottom bottom",
           scrub: 0.3,
-          onUpdate: (self) => {
-            // Drive the canvas frame sequence from scroll progress
-            setProgress(self.progress);
-          },
+          onUpdate: (self) => setProgress(self.progress),
         },
       });
 
-      // Content fade/blur out in first 15%
       masterTl.to(badgeRef.current, { y: -40, opacity: 0, filter: "blur(12px)", ease: "power2.in", duration: 0.15 }, 0);
-      masterTl.to(validHeadlineEls, { y: -40, opacity: 0, filter: "blur(12px)", stagger: 0.02, ease: "power2.in", duration: 0.15 }, 0);
+      masterTl.to(headlineRef.current, { y: -40, opacity: 0, filter: "blur(12px)", ease: "power2.in", duration: 0.15 }, 0);
       masterTl.to(subtitleRef.current, { y: -30, opacity: 0, filter: "blur(8px)", ease: "power2.in", duration: 0.15 }, 0);
       masterTl.to(ctaRef.current, { y: -20, opacity: 0, filter: "blur(8px)", ease: "power2.in", duration: 0.15 }, 0.02);
-      masterTl.to(paginationRef.current, { x: 18, opacity: 0, filter: "blur(6px)", ease: "power2.in", duration: 0.15 }, 0.02);
       masterTl.to(scrollIndicatorRef.current, { opacity: 0, filter: "blur(6px)", ease: "power2.in", duration: 0.1 }, 0);
-
-      // Media blur/zoom in second half
+      masterTl.to(paginationRef.current, { x: 18, opacity: 0, filter: "blur(6px)", ease: "power2.in", duration: 0.15 }, 0.02);
       masterTl.to(media, { scale: 1.06, filter: "blur(2px)", opacity: 0.6, ease: "power2.inOut", duration: 0.5 }, 0.5);
     }, section);
 
-    return () => {
-      ctx.revert();
-    };
+    return () => ctx.revert();
   }, [setProgress]);
 
   return (
-    <section ref={sectionRef} className="relative h-[500vh] bg-background">
-      <div ref={pinnedRef} className="sticky top-0 h-screen w-full overflow-hidden bg-background">
+    <section ref={sectionRef} className="relative h-[500vh] bg-foreground">
+      <div ref={pinnedRef} className="sticky top-0 h-screen w-full overflow-hidden">
         {/* Top banner */}
         <div className="absolute top-0 left-0 right-0 z-40 overflow-hidden bg-primary">
           <div className="flex animate-[marquee_18s_linear_infinite] whitespace-nowrap py-2.5">
@@ -102,6 +85,8 @@ const HeroSection = () => {
             ))}
           </div>
         </div>
+
+        {/* Background: canvas frames or fallback gradient */}
         <div ref={mediaRef} className="absolute inset-0 origin-center">
           <canvas
             ref={canvasRef}
@@ -109,101 +94,119 @@ const HeroSection = () => {
             aria-hidden="true"
             style={{ display: loaded ? "block" : "none" }}
           />
-          {/* Loading placeholder */}
           {!loaded && (
-            <div className="h-full w-full bg-background" />
+            <div
+              className="h-full w-full"
+              style={{
+                background: "linear-gradient(135deg, hsl(225 30% 12%) 0%, hsl(216 76% 22%) 40%, hsl(206 64% 29%) 70%, hsl(225 30% 12%) 100%)",
+              }}
+            />
           )}
+          {/* Left gradient overlay for text readability */}
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(90deg, hsl(var(--background) / 0.88) 0%, hsl(var(--background) / 0.65) 28%, hsl(var(--background) / 0.15) 55%, transparent 100%)",
+                "linear-gradient(90deg, hsl(225 30% 8% / 0.92) 0%, hsl(225 30% 8% / 0.75) 30%, hsl(225 30% 8% / 0.25) 55%, transparent 100%)",
             }}
           />
+          {/* Top/bottom vignette */}
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(180deg, hsl(var(--background) / 0.3) 0%, transparent 30%, transparent 60%, hsl(var(--background) / 0.7) 100%)",
+                "linear-gradient(180deg, hsl(225 30% 8% / 0.4) 0%, transparent 25%, transparent 65%, hsl(225 30% 8% / 0.6) 100%)",
             }}
           />
         </div>
 
-        <div className="relative z-10 flex h-full flex-col justify-center px-6 pt-28 pb-24 md:px-12 md:pt-32 md:pb-20 lg:px-16">
-          <div className="max-w-xl">
-            <div ref={badgeRef} className="mb-4 md:mb-6 inline-flex items-center gap-2 rounded-full border border-ocre/30 bg-ocre/10 px-4 py-2 md:px-5 md:py-2.5 backdrop-blur-sm">
-              <span className="relative flex h-2.5 w-2.5">
+        {/* Content */}
+        <div className="relative z-10 flex h-full flex-col justify-center px-6 pt-32 pb-20 md:px-12 md:pt-36 md:pb-24 lg:px-16 xl:px-20">
+          <div className="max-w-2xl">
+            {/* Badge */}
+            <div ref={badgeRef} className="mb-5 md:mb-6 inline-flex items-center gap-2.5 rounded-full border border-ocre/30 bg-ocre/10 px-4 py-2 md:px-5 md:py-2.5 backdrop-blur-md">
+              <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ocre opacity-75"></span>
-                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-ocre"></span>
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-ocre"></span>
               </span>
-              <span className="font-body text-sm font-bold tracking-wide text-ocre md:text-base">
-                O segredo por trás dos ambientes mais sofisticados do Brasil
+              <span className="font-body text-xs font-bold tracking-wider text-ocre uppercase md:text-sm">
+                O segredo por trás dos ambientes mais sofisticados
               </span>
-            </div>
-            <div className="mb-4 md:mb-5">
-              {headlineLines.map((line, index) => (
-                <span
-                  key={line.text}
-                  ref={(element) => {
-                    headlineRefs.current[index] = element;
-                  }}
-                  className={`block font-heading text-3xl font-bold leading-[0.9] tracking-tight sm:text-4xl md:text-4xl lg:text-[3.2rem] xl:text-6xl ${
-                    line.outline ? "text-transparent" : "text-foreground"
-                  }`}
-                  style={
-                    line.outline
-                      ? { WebkitTextStroke: "1px hsl(var(--foreground))" }
-                      : { color: "#0a0a0a" }
-                  }
-                >
-                  {line.text}
-                </span>
-              ))}
             </div>
 
+            {/* Headline */}
+            <div ref={headlineRef} className="mb-5 md:mb-6">
+              <h1 className="font-heading text-4xl font-bold leading-[0.92] tracking-tight sm:text-5xl md:text-[3.5rem] lg:text-6xl xl:text-7xl text-primary-foreground">
+                A Perfumação de Luxo
+                <br />
+                <span className="text-ocre">que Protege</span> seu
+                <br />
+                Equipamento
+              </h1>
+              <p className="mt-3 font-heading text-xl font-medium leading-tight tracking-tight text-primary-foreground/60 sm:text-2xl md:text-3xl lg:text-[2rem]">
+                Essências Profissionais
+                <span className="text-ocre-light"> com Nanotecnologia.</span>
+              </p>
+            </div>
+
+            {/* Subtitle */}
             <p
               ref={subtitleRef}
-              className="mb-5 max-w-md font-body text-base leading-relaxed text-foreground md:text-lg md:mb-6"
+              className="mb-6 max-w-md font-body text-sm leading-relaxed text-primary-foreground/70 md:text-base md:mb-8"
             >
               <span className="font-bold text-ocre">Descubra o segredo</span> dos maiores hotéis e clínicas do mundo. Projeção intensa,
               rendimento superior e 180 dias de garantia total.
             </p>
 
-            <div ref={ctaRef} className="flex flex-wrap gap-3">
+            {/* CTA Buttons */}
+            <div ref={ctaRef} className="flex flex-wrap gap-3 md:gap-4">
               <a
                 href="#kits"
-                className="inline-flex items-center justify-center rounded-full bg-ocre px-6 py-3 font-body text-xs font-bold uppercase tracking-widest text-ocre-foreground transition-transform hover:scale-105"
+                className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-ocre px-7 py-3.5 font-body text-xs font-bold uppercase tracking-widest text-ocre-foreground transition-all duration-300 hover:scale-105 hover:shadow-[0_8px_30px_-4px_hsl(30_58%_62%/0.5)] md:px-8 md:py-4 md:text-sm"
               >
-                Assinar e Economizar
+                <span className="relative z-10">Assinar e Economizar</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-ocre to-ocre-light opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               </a>
               <a
                 href="#kits"
-                className="inline-flex items-center justify-center rounded-full border border-ocre-light px-6 py-3 font-body text-xs font-semibold uppercase tracking-widest text-ocre-light transition-all hover:bg-ocre-light/10 hover:border-ocre hover:text-ocre"
+                className="inline-flex items-center justify-center rounded-full border border-primary-foreground/25 px-7 py-3.5 font-body text-xs font-semibold uppercase tracking-widest text-primary-foreground/80 backdrop-blur-sm transition-all duration-300 hover:border-ocre hover:text-ocre hover:bg-ocre/10 md:px-8 md:py-4 md:text-sm"
               >
                 Escolher Fragrância
               </a>
             </div>
+          </div>
 
-            {/* Scroll indicator - inline */}
-            <div ref={scrollIndicatorRef} className="mt-8 flex flex-col items-center gap-1 md:mt-10">
-              <span className="font-body text-sm font-bold uppercase tracking-[0.25em] text-ocre md:text-base">
-                Descobrir Agora
-              </span>
-              <div className="h-5 w-px animate-pulse bg-ocre/50 md:h-6" />
-              <svg className="w-5 h-5 text-ocre animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          {/* Scroll indicator - bottom center */}
+          <div
+            ref={scrollIndicatorRef}
+            className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 md:bottom-10"
+          >
+            <span className="font-body text-[10px] font-bold uppercase tracking-[0.3em] text-ocre md:text-xs">
+              Descobrir Agora
+            </span>
+            <div className="flex flex-col items-center gap-1">
+              <div className="h-6 w-px bg-gradient-to-b from-ocre/80 to-transparent md:h-8" />
+              <svg
+                className="w-4 h-4 text-ocre animate-bounce md:w-5 md:h-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2.5}
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
             </div>
           </div>
         </div>
 
+        {/* Side pagination */}
         <div
           ref={paginationRef}
           className="absolute right-8 top-1/2 z-20 hidden -translate-y-1/2 flex-col items-center gap-3 md:flex"
         >
-          <span className="font-body text-xs tracking-widest text-foreground/70">01</span>
-          <div className="h-12 w-px bg-foreground/20" />
-          <span className="font-body text-xs tracking-widest text-foreground/35">04</span>
+          <span className="font-body text-xs tracking-widest text-primary-foreground/60">01</span>
+          <div className="h-12 w-px bg-primary-foreground/20" />
+          <span className="font-body text-xs tracking-widest text-primary-foreground/30">04</span>
         </div>
       </div>
     </section>
