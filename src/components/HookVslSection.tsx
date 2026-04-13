@@ -6,6 +6,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 const HookVslSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     if (!sectionRef.current) return;
@@ -20,6 +21,23 @@ const HookVslSection = () => {
       });
     }, sectionRef);
     return () => ctx.revert();
+  }, []);
+
+  // Autoplay video when section enters viewport
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          video.muted = true;
+          video.play().catch(() => {});
+        }
+      },
+      { threshold: 0.4 }
+    );
+    observer.observe(video);
+    return () => observer.disconnect();
   }, []);
 
   return (
