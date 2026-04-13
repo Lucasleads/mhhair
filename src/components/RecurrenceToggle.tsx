@@ -45,6 +45,7 @@ const RecurrenceToggle = ({ isSubscription, onToggle }: RecurrenceToggleProps) =
             </div>
           )}
         </div>
+      </div>
     </div>
   );
 };
