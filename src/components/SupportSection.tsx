@@ -5,22 +5,17 @@ import { MessageCircle, Users, UserCheck, Headphones } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const supportCards = [
-  {
-    icon: MessageCircle,
-    title: "WhatsApp Direto",
-    desc: "Atendimento rápido e humanizado pelo WhatsApp. Sem robôs, sem espera. Fale com quem entende do assunto.",
-  },
-  {
-    icon: Users,
-    title: "Consultoria Especializada",
-    desc: "Nossa equipe te ajuda a escolher a fragrância ideal para o seu ambiente e tipo de negócio.",
-  },
-  {
-    icon: UserCheck,
-    title: "Gerente Dedicado",
-    desc: "Clientes do Clube de Assinatura contam com um gerente exclusivo para acompanhar cada detalhe.",
-  },
+const accessItems = [
+  { icon: MessageCircle, text: "WhatsApp com especialistas" },
+  { icon: Users, text: "Consultores em aromatização" },
+  { icon: UserCheck, text: "Gerente olfativo dedicado" },
+];
+
+const benefitItems = [
+  "Orientar uso",
+  "Ajustar intensidade",
+  "Recomendar fragrâncias",
+  "Resolver qualquer dúvida",
 ];
 
 const SupportSection = () => {
@@ -77,23 +72,44 @@ const SupportSection = () => {
         </div>
 
         {/* Cards */}
-        <div className="sup-cards grid grid-cols-1 md:grid-cols-3 gap-6">
-          {supportCards.map((card) => (
-            <div
-              key={card.title}
-              className="sup-card group rounded-2xl bg-card border border-border/60 p-7 shadow-[var(--shadow-card)] hover:shadow-[var(--shadow-card-hover)] hover:-translate-y-2 transition-all duration-400 cursor-default"
-            >
-              <div className="w-14 h-14 rounded-xl bg-ocre/10 border border-ocre/20 flex items-center justify-center mb-5 group-hover:shadow-[var(--shadow-ocre)] group-hover:scale-105 transition-all duration-300">
-                <card.icon className="w-7 h-7 text-ocre" />
-              </div>
-              <h3 className="font-heading text-lg font-bold text-foreground mb-2">
-                {card.title}
-              </h3>
-              <p className="font-body text-sm text-muted-foreground leading-relaxed">
-                {card.desc}
+        <div className="sup-cards grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Você terá acesso a */}
+          <div className="sup-card rounded-2xl bg-card border border-border/60 p-8 shadow-[var(--shadow-card)]">
+            <h3 className="font-heading text-lg font-bold text-foreground mb-5">
+              Você terá acesso a:
+            </h3>
+            <ul className="space-y-4">
+              {accessItems.map((item) => (
+                <li key={item.text} className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-ocre/10 border border-ocre/20 flex items-center justify-center shrink-0">
+                    <item.icon className="w-5 h-5 text-ocre" />
+                  </div>
+                  <span className="font-body text-sm text-foreground">{item.text}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Para */}
+          <div className="sup-card rounded-2xl bg-card border border-border/60 p-8 shadow-[var(--shadow-card)]">
+            <h3 className="font-heading text-lg font-bold text-foreground mb-5">
+              Para:
+            </h3>
+            <ul className="space-y-3">
+              {benefitItems.map((item) => (
+                <li key={item} className="flex items-center gap-3">
+                  <span className="w-2 h-2 rounded-full bg-ocre shrink-0" />
+                  <span className="font-body text-sm text-muted-foreground">{item}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-6 pt-5 border-t border-border/60">
+              <p className="font-heading text-sm font-bold text-ocre flex items-center gap-2">
+                <Headphones className="w-4 h-4" />
+                Suporte real, não automático.
               </p>
             </div>
-          ))}
+          </div>
         </div>
 
         {/* WhatsApp CTA */}
