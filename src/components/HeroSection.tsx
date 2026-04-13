@@ -144,8 +144,8 @@ const HeroSection = () => {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 flex h-full flex-col justify-end pb-20 items-center text-center px-5 md:justify-center md:items-start md:text-left md:px-12 md:pt-36 md:pb-24 lg:px-16 xl:px-20" style={{ textShadow: 'var(--mobile-text-shadow, none)' }}>
-          <div className="max-w-2xl" style={{ ['--mobile-text-shadow' as string]: '0 2px 12px hsl(225 30% 8% / 0.6), 0 1px 3px hsl(225 30% 8% / 0.4)' }}>
+        <div className="relative z-10 flex h-full flex-col justify-end pb-20 items-center text-center px-5 md:justify-center md:items-start md:text-left md:px-12 md:pt-36 md:pb-24 lg:px-16 xl:px-20">
+          <div className="max-w-2xl [text-shadow:0_2px_12px_hsl(225_30%_8%/0.7),0_1px_3px_hsl(225_30%_8%/0.5)] md:[text-shadow:none]">
             {/* Badge */}
             <div ref={badgeRef} className="mb-4 md:mb-6 inline-flex items-center gap-2 rounded-full border border-ocre/30 bg-ocre/10 px-3 py-1.5 md:px-5 md:py-2.5 backdrop-blur-md">
               <span className="relative flex h-1.5 w-1.5 md:h-2 md:w-2">
