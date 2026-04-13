@@ -66,36 +66,35 @@ const UseCasesSection = () => {
 
     const ctx = gsap.context(() => {
       // Header animation
-      gsap.from(".uc-header", {
-        y: 30,
-        opacity: 0,
-        duration: 0.8,
-        ease: "power3.out",
-        scrollTrigger: { trigger: sectionRef.current, start: "top 80%", once: true },
-      });
+      const headerEl = sectionRef.current!.querySelector(".uc-header");
+      if (headerEl) {
+        gsap.fromTo(headerEl,
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.8, ease: "power3.out",
+            scrollTrigger: { trigger: sectionRef.current, start: "top 80%", toggleActions: "play none none none" },
+          }
+        );
+      }
 
       // Cards stagger
       const items = gridRef.current!.querySelectorAll(".use-card");
-      gsap.from(items, {
-        y: 60,
-        opacity: 0,
-        scale: 0.95,
-        duration: 0.7,
-        stagger: 0.12,
-        ease: "power3.out",
-        scrollTrigger: { trigger: gridRef.current, start: "top 85%", once: true },
-      });
+      gsap.fromTo(items,
+        { y: 60, opacity: 0, scale: 0.95 },
+        { y: 0, opacity: 1, scale: 1, duration: 0.7, stagger: 0.12, ease: "power3.out",
+          scrollTrigger: { trigger: gridRef.current, start: "top 85%", toggleActions: "play none none none" },
+        }
+      );
 
       // Image parallax on each card
       items.forEach((card) => {
         const img = card.querySelector(".uc-img");
         if (img) {
-          gsap.from(img, {
-            scale: 1.15,
-            duration: 1.2,
-            ease: "power2.out",
-            scrollTrigger: { trigger: card, start: "top 85%", once: true },
-          });
+          gsap.fromTo(img,
+            { scale: 1.15 },
+            { scale: 1, duration: 1.2, ease: "power2.out",
+              scrollTrigger: { trigger: card, start: "top 85%", toggleActions: "play none none none" },
+            }
+          );
         }
       });
     }, sectionRef);
