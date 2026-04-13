@@ -6,6 +6,7 @@ import KitsPricingSection from "@/components/KitsPricingSection";
 import PerformanceSection from "@/components/PerformanceSection";
 import UseCasesSection from "@/components/UseCasesSection";
 import OlfactiveConnectionSection from "@/components/OlfactiveConnectionSection";
+import SocialProofSection from "@/components/SocialProofSection";
 import GuaranteeSection from "@/components/GuaranteeSection";
 import FaqSection from "@/components/FaqSection";
 import FinalCtaSection from "@/components/FinalCtaSection";
@@ -23,6 +24,7 @@ const Index = () => {
       <PerformanceSection />
       <UseCasesSection />
       <OlfactiveConnectionSection />
+      <SocialProofSection />
       <GuaranteeSection />
       <FaqSection />
       <FinalCtaSection />
