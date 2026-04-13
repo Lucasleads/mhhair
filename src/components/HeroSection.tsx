@@ -186,7 +186,7 @@ const HeroSection = () => {
           ref={scrollIndicatorRef}
           className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-2"
         >
-          <span className="font-body text-xs font-bold uppercase tracking-[0.25em] text-ocre">
+          <span className="font-body text-sm font-bold uppercase tracking-[0.25em] text-ocre md:text-base">
             Descobrir Agora
           </span>
           <div className="h-6 w-px animate-pulse bg-ocre/50" />
