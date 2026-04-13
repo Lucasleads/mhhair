@@ -129,7 +129,7 @@ const HeroSection = () => {
           />
         </div>
 
-        <div className="relative z-10 flex h-full flex-col justify-center px-6 pt-16 md:px-12 lg:px-16">
+        <div className="relative z-10 flex h-full flex-col justify-center px-6 pt-24 pb-28 md:px-12 md:pt-28 md:pb-24 lg:px-16">
           <div className="max-w-xl">
             <div ref={badgeRef} className="mb-6 inline-flex items-center gap-2 rounded-full border border-ocre/30 bg-ocre/10 px-5 py-2.5 backdrop-blur-sm">
               <span className="relative flex h-2.5 w-2.5">
@@ -163,7 +163,7 @@ const HeroSection = () => {
 
             <p
               ref={subtitleRef}
-              className="mb-8 max-w-md font-body text-lg leading-relaxed text-foreground md:text-xl"
+              className="mb-6 max-w-md font-body text-base leading-relaxed text-foreground md:text-xl md:mb-8"
             >
               <span className="font-bold text-ocre">Descubra o segredo</span> dos maiores hotéis e clínicas do mundo. Projeção intensa,
               rendimento superior e 180 dias de garantia total.
@@ -197,9 +197,9 @@ const HeroSection = () => {
 
         <div
           ref={scrollIndicatorRef}
-          className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-2"
+          className="absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-1 md:bottom-8 md:gap-2"
         >
-          <span className="font-body text-sm font-bold uppercase tracking-[0.25em] text-ocre md:text-base">
+          <span className="font-body text-xs font-bold uppercase tracking-[0.25em] text-ocre md:text-base">
             Descobrir Agora
           </span>
           <div className="h-6 w-px animate-pulse bg-ocre/50" />
