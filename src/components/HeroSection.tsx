@@ -20,6 +20,7 @@ const HeroSection = () => {
   const headlineRefs = useRef<(HTMLSpanElement | null)[]>([]);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
+  const badgeRef = useRef<HTMLDivElement>(null);
   const scrollIndicatorRef = useRef<HTMLDivElement>(null);
   const paginationRef = useRef<HTMLDivElement>(null);
 
@@ -34,6 +35,7 @@ const HeroSection = () => {
 
     const validHeadlineEls = headlineRefs.current.filter(Boolean) as HTMLSpanElement[];
     const contentEls = [
+      badgeRef.current,
       ...validHeadlineEls,
       subtitleRef.current,
       ctaRef.current,
@@ -49,7 +51,8 @@ const HeroSection = () => {
       // ── Intro animation (on load) ──
       const introTl = gsap.timeline({ defaults: { ease: "power3.out" }, delay: 0.2 });
       introTl
-        .to(validHeadlineEls, { y: 0, opacity: 1, filter: "blur(0px)", duration: 1, stagger: 0.12 })
+        .to(badgeRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.8 })
+        .to(validHeadlineEls, { y: 0, opacity: 1, filter: "blur(0px)", duration: 1, stagger: 0.12 }, "-=0.5")
         .to(subtitleRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.8 }, "-=0.45")
         .to(ctaRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.7 }, "-=0.35")
         .to(paginationRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.7 }, "-=0.25")
@@ -70,6 +73,7 @@ const HeroSection = () => {
       });
 
       // Content fade/blur out in first 15%
+      masterTl.to(badgeRef.current, { y: -40, opacity: 0, filter: "blur(12px)", ease: "power2.in", duration: 0.15 }, 0);
       masterTl.to(validHeadlineEls, { y: -40, opacity: 0, filter: "blur(12px)", stagger: 0.02, ease: "power2.in", duration: 0.15 }, 0);
       masterTl.to(subtitleRef.current, { y: -30, opacity: 0, filter: "blur(8px)", ease: "power2.in", duration: 0.15 }, 0);
       masterTl.to(ctaRef.current, { y: -20, opacity: 0, filter: "blur(8px)", ease: "power2.in", duration: 0.15 }, 0.02);
@@ -127,6 +131,15 @@ const HeroSection = () => {
 
         <div className="relative z-10 flex h-full flex-col justify-center px-6 pt-16 md:px-12 lg:px-16">
           <div className="max-w-xl">
+            <div ref={badgeRef} className="mb-6 inline-flex items-center gap-2 rounded-full border border-ocre/30 bg-ocre/10 px-5 py-2.5 backdrop-blur-sm">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ocre opacity-75"></span>
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-ocre"></span>
+              </span>
+              <span className="font-body text-sm font-bold tracking-wide text-ocre md:text-base">
+                O segredo por trás dos ambientes mais sofisticados do Brasil
+              </span>
+            </div>
             <div className="mb-5">
               {headlineLines.map((line, index) => (
                 <span
