@@ -16,7 +16,7 @@ const cards = [
   {
     title: "Kit Experience — 8 Fragrâncias",
     subtitle: "8 frascos de 100ml",
-    image: productCandy,
+    image: productJardimZen,
     priceUnit: 197.0,
     priceSubscription: 167.45,
     highlight: "Ideal para conhecer todas as opções",
@@ -29,7 +29,7 @@ const cards = [
   {
     title: "1 Unidade Profissional (1L)",
     subtitle: "1 frasco de 1L + 1 Amostra de 100ml",
-    image: productAlecrim,
+    image: productCandy,
     priceUnit: 149.9,
     priceSubscription: 127.42,
     benefits: [
@@ -55,7 +55,7 @@ const cards = [
   {
     title: "Kit Business 5 Unidades (5L)",
     subtitle: "5 frascos de 1L + 1 Amostra de 100ml",
-    image: productJardimZen,
+    image: productAlecrim,
     priceUnit: 597.0,
     priceSubscription: 507.45,
     highlight: "Melhor Preço por Litro",
