@@ -197,13 +197,13 @@ const HeroSection = () => {
 
         <div
           ref={scrollIndicatorRef}
-          className="absolute bottom-4 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-1 md:bottom-8 md:gap-2"
+          className="absolute bottom-4 left-1/2 z-20 hidden -translate-x-1/2 flex-col items-center gap-1 min-[900px]:flex md:bottom-6 md:gap-2"
         >
-          <span className="font-body text-xs font-bold uppercase tracking-[0.25em] text-ocre md:text-base">
+          <span className="font-body text-xs font-bold uppercase tracking-[0.25em] text-ocre md:text-sm">
             Descobrir Agora
           </span>
-          <div className="h-6 w-px animate-pulse bg-ocre/50" />
-          <svg className="w-5 h-5 text-ocre animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+          <div className="h-4 w-px animate-pulse bg-ocre/50 md:h-6" />
+          <svg className="w-4 h-4 text-ocre animate-bounce md:w-5 md:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
           </svg>
         </div>
