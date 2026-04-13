@@ -257,11 +257,20 @@ const NewMechanismSection = () => {
 
         {/* Bottom badge */}
         <div className="mech-badge mt-14 text-center">
-          <div className="inline-flex items-center gap-3 rounded-full bg-success/10 border border-success/25 px-7 py-4 shadow-md backdrop-blur-sm">
-            <ShieldCheck className="w-6 h-6 text-success" />
-            <span className="font-body text-sm md:text-base font-bold text-foreground">
-              Segurança Total para seu Equipamento — Garantia de 180 dias
-            </span>
+          <div className="relative inline-flex items-center gap-4 rounded-2xl border-2 border-success/40 bg-success/10 px-8 py-5 shadow-lg backdrop-blur-sm">
+            {/* Glow behind */}
+            <div className="absolute inset-0 rounded-2xl opacity-20 blur-xl" style={{ background: "hsl(var(--success))" }} />
+            <div className="relative flex items-center justify-center w-12 h-12 rounded-full bg-success text-success-foreground shadow-md">
+              <ShieldCheck className="w-7 h-7" />
+            </div>
+            <div className="relative text-left">
+              <span className="font-heading text-lg md:text-xl font-bold text-foreground block leading-tight">
+                Segurança Total para seu Equipamento
+              </span>
+              <span className="font-body text-sm font-semibold text-success uppercase tracking-wider">
+                Garantia de 180 dias
+              </span>
+            </div>
           </div>
         </div>
       </div>
