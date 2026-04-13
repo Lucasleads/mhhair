@@ -119,12 +119,12 @@ const HeroSection = () => {
               className="h-full w-full object-cover"
             />
           )}
-          {/* Gradient overlay — lighter on mobile to show product, darker on desktop for text contrast */}
+           {/* Gradient overlay — stronger on mobile for text contrast on light backgrounds */}
           <div
             className="absolute inset-0 md:hidden"
             style={{
               background:
-                "linear-gradient(180deg, transparent 0%, hsl(225 30% 8% / 0.25) 30%, hsl(225 30% 8% / 0.55) 70%, hsl(225 30% 8% / 0.7) 100%)",
+                "linear-gradient(180deg, hsl(225 30% 8% / 0.3) 0%, hsl(225 30% 8% / 0.45) 35%, hsl(225 30% 8% / 0.7) 60%, hsl(225 30% 8% / 0.85) 100%)",
             }}
           />
           <div
@@ -145,7 +145,7 @@ const HeroSection = () => {
 
         {/* Content */}
         <div className="relative z-10 flex h-full flex-col justify-end pb-20 items-center text-center px-5 md:justify-center md:items-start md:text-left md:px-12 md:pt-36 md:pb-24 lg:px-16 xl:px-20">
-          <div className="max-w-2xl">
+          <div className="max-w-2xl [text-shadow:0_2px_12px_hsl(225_30%_8%/0.7),0_1px_3px_hsl(225_30%_8%/0.5)] md:[text-shadow:none]">
             {/* Badge */}
             <div ref={badgeRef} className="mb-4 md:mb-6 inline-flex items-center gap-2 rounded-full border border-ocre/30 bg-ocre/10 px-3 py-1.5 md:px-5 md:py-2.5 backdrop-blur-md">
               <span className="relative flex h-1.5 w-1.5 md:h-2 md:w-2">
