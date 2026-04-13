@@ -27,7 +27,7 @@ const newWay = [
   {
     icon: Sparkles,
     title: "Névoa Pura com Nanotecnologia",
-    desc: "A MH AIR gera partículas nanométricas que se dispersam uniformemente, sem deixar resíduos.",
+    desc: "A WHAIR gera partículas nanométricas que se dispersam uniformemente, sem deixar resíduos.",
   },
   {
     icon: ShieldCheck,
@@ -224,7 +224,7 @@ const NewMechanismSection = () => {
                 </div>
                 <div>
                   <h3 className="font-heading text-xl font-bold text-success">
-                    Nanotecnologia MH AIR
+                    Nanotecnologia WHAIR
                   </h3>
                   <span className="font-body text-xs text-success/70 uppercase tracking-wider">A solução definitiva</span>
                 </div>
