@@ -35,6 +35,7 @@ const HeroSection = () => {
 
     const validHeadlineEls = headlineRefs.current.filter(Boolean) as HTMLSpanElement[];
     const contentEls = [
+      badgeRef.current,
       ...validHeadlineEls,
       subtitleRef.current,
       ctaRef.current,
@@ -50,7 +51,8 @@ const HeroSection = () => {
       // ── Intro animation (on load) ──
       const introTl = gsap.timeline({ defaults: { ease: "power3.out" }, delay: 0.2 });
       introTl
-        .to(validHeadlineEls, { y: 0, opacity: 1, filter: "blur(0px)", duration: 1, stagger: 0.12 })
+        .to(badgeRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.8 })
+        .to(validHeadlineEls, { y: 0, opacity: 1, filter: "blur(0px)", duration: 1, stagger: 0.12 }, "-=0.5")
         .to(subtitleRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.8 }, "-=0.45")
         .to(ctaRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.7 }, "-=0.35")
         .to(paginationRef.current, { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.7 }, "-=0.25")
