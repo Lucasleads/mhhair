@@ -73,6 +73,7 @@ const HeroSection = () => {
       });
 
       // Content fade/blur out in first 15%
+      masterTl.to(badgeRef.current, { y: -40, opacity: 0, filter: "blur(12px)", ease: "power2.in", duration: 0.15 }, 0);
       masterTl.to(validHeadlineEls, { y: -40, opacity: 0, filter: "blur(12px)", stagger: 0.02, ease: "power2.in", duration: 0.15 }, 0);
       masterTl.to(subtitleRef.current, { y: -30, opacity: 0, filter: "blur(8px)", ease: "power2.in", duration: 0.15 }, 0);
       masterTl.to(ctaRef.current, { y: -20, opacity: 0, filter: "blur(8px)", ease: "power2.in", duration: 0.15 }, 0.02);
