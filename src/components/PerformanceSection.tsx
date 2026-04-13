@@ -76,7 +76,7 @@ const PerformanceSection = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="py-24 px-4 md:px-8 bg-card overflow-hidden">
+    <section ref={sectionRef} className="py-24 px-4 md:px-8 overflow-hidden" style={{ background: "linear-gradient(180deg, hsl(var(--background)) 0%, hsl(var(--muted) / 0.3) 100%)" }}>
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Image Column */}
@@ -91,7 +91,7 @@ const PerformanceSection = () => {
                 className="w-full h-[400px] md:h-[520px] object-cover"
               />
               {/* Overlay gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-card/40 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
             </div>
 
             {/* Floating particles overlay */}
@@ -99,7 +99,7 @@ const PerformanceSection = () => {
               {Array.from({ length: 12 }).map((_, i) => (
                 <div
                   key={i}
-                  className="particle absolute rounded-full bg-secondary/40"
+                  className="particle absolute rounded-full bg-ocre/40"
                   style={{
                     width: `${Math.random() * 6 + 3}px`,
                     height: `${Math.random() * 6 + 3}px`,
@@ -112,22 +112,22 @@ const PerformanceSection = () => {
             </div>
 
             {/* Accent border */}
-            <div className="absolute -inset-1 rounded-2xl border-2 border-secondary/15 -z-10" />
+            <div className="absolute -inset-1 rounded-2xl border-2 border-ocre/15 -z-10" />
           </div>
 
           {/* Text Column */}
           <div ref={textRef}>
             <div className="perf-text-item mb-3">
-              <span className="inline-flex items-center gap-2 rounded-full border border-secondary/30 bg-secondary/10 px-4 py-1.5">
-                <span className="font-body text-xs font-bold uppercase tracking-widest" style={{ color: "hsl(209 69% 41%)" }}>
+              <span className="inline-flex items-center gap-2 rounded-full border border-ocre/30 bg-ocre/10 px-4 py-1.5">
+                <span className="font-body text-xs font-bold text-ocre uppercase tracking-widest">
                   Performance & Sofisticação
                 </span>
               </span>
             </div>
 
-            <h2 className="perf-text-item font-heading text-3xl md:text-4xl lg:text-[2.75rem] font-bold leading-tight mb-6" style={{ color: "hsl(216 76% 32%)" }}>
+            <h2 className="perf-text-item font-heading text-3xl md:text-4xl lg:text-[2.75rem] font-bold text-foreground leading-tight mb-6">
               O aroma que projeta muito mais e{" "}
-              <span style={{ color: "hsl(209 69% 41%)" }}>define sua marca</span>
+              <span className="text-ocre">define sua marca</span>
             </h2>
 
             <p className="perf-text-item font-body text-muted-foreground text-base md:text-lg leading-relaxed mb-10">
@@ -138,8 +138,8 @@ const PerformanceSection = () => {
             <div className="space-y-6">
               {topics.map((topic) => (
                 <div key={topic.title} className="perf-text-item flex gap-4 group">
-                  <div className="mt-1 flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center border border-secondary/20 transition-all duration-300 group-hover:shadow-md" style={{ background: "hsl(209 69% 41% / 0.08)" }}>
-                    <topic.icon className="w-6 h-6" style={{ color: "hsl(209 69% 41%)" }} />
+                  <div className="mt-1 flex-shrink-0 w-12 h-12 rounded-xl bg-ocre/10 border border-ocre/20 flex items-center justify-center transition-all duration-300 group-hover:shadow-[var(--shadow-ocre)] group-hover:scale-105">
+                    <topic.icon className="w-6 h-6 text-ocre" />
                   </div>
                   <div>
                     <h4 className="font-heading text-lg font-bold text-foreground mb-1">
