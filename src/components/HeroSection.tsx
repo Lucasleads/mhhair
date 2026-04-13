@@ -93,7 +93,7 @@ const HeroSection = () => {
     <section ref={sectionRef} className="relative h-[500vh] bg-background">
       <div ref={pinnedRef} className="sticky top-0 h-screen w-full overflow-hidden bg-background">
         {/* Top banner */}
-        <div className="absolute top-0 left-0 right-0 z-30 overflow-hidden bg-primary">
+        <div className="absolute top-0 left-0 right-0 z-40 overflow-hidden bg-primary">
           <div className="flex animate-[marquee_18s_linear_infinite] whitespace-nowrap py-2.5">
             {[...Array(3)].map((_, i) => (
               <span key={i} className="mx-8 font-body text-sm font-semibold text-primary-foreground tracking-wide">
@@ -140,7 +140,7 @@ const HeroSection = () => {
                 O segredo por trás dos ambientes mais sofisticados do Brasil
               </span>
             </div>
-            <div className="mb-5">
+            <div className="mb-4 md:mb-5">
               {headlineLines.map((line, index) => (
                 <span
                   key={line.text}
