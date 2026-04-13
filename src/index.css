@@ -124,4 +124,14 @@
     0% { transform: translateX(0); }
     100% { transform: translateX(-33.333%); }
   }
+
+  @keyframes cta-ping {
+    0% { transform: scale(1); opacity: 0.6; }
+    100% { transform: scale(1.5); opacity: 0; }
+  }
+
+  @keyframes cta-glow {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+  }
 }
