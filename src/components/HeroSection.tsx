@@ -129,7 +129,7 @@ const HeroSection = () => {
           />
         </div>
 
-        <div className="relative z-10 flex h-full flex-col justify-center px-6 pt-24 pb-28 md:px-12 md:pt-28 md:pb-24 lg:px-16">
+        <div className="relative z-10 flex h-full flex-col justify-center px-6 pt-28 pb-24 md:px-12 md:pt-32 md:pb-20 lg:px-16">
           <div className="max-w-xl">
             <div ref={badgeRef} className="mb-6 inline-flex items-center gap-2 rounded-full border border-ocre/30 bg-ocre/10 px-5 py-2.5 backdrop-blur-sm">
               <span className="relative flex h-2.5 w-2.5">
