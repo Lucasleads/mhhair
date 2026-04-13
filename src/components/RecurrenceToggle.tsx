@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { ArrowDown } from "lucide-react";
+import { ArrowUp } from "lucide-react";
 
 interface RecurrenceToggleProps {
   isSubscription: boolean;
@@ -35,19 +35,19 @@ const RecurrenceToggle = ({ isSubscription, onToggle }: RecurrenceToggleProps) =
             <span className="ml-1.5 text-xs font-bold opacity-90">(Economize 15% + Brindes)</span>
           </button>
 
-          {/* Animated green arrow pointing to the subscription button */}
+          {/* Animated green arrow pointing UP to the subscription button */}
           {!isSubscription && (
-            <div className="absolute -bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center animate-[bounce_1.2s_ease-in-out_infinite]">
-              <ArrowDown className="w-6 h-6 text-success drop-shadow-md" strokeWidth={3} />
+            <div className="absolute -top-9 left-1/2 -translate-x-1/2 flex flex-col items-center animate-[bounce_1.2s_ease-in-out_infinite]">
+              <ArrowUp className="w-6 h-6 text-success drop-shadow-md" strokeWidth={3} />
             </div>
           )}
         </div>
       </div>
 
-      {/* Helper text below arrow */}
+      {/* Helper text below */}
       {!isSubscription && (
-        <span className="mt-4 font-body text-xs font-bold text-success tracking-wide animate-[pulse_2s_ease-in-out_infinite]">
-          👆 Clique e economize 15%!
+        <span className="font-body text-xs font-bold text-success tracking-wide animate-[pulse_2s_ease-in-out_infinite]">
+          ☝️ Clique e economize 15%!
         </span>
       )}
     </div>
