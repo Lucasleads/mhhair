@@ -89,7 +89,7 @@ const HeroSection = () => {
   }, [setProgress]);
 
   return (
-    <section ref={sectionRef} className="relative h-[500vh] bg-foreground">
+    <section ref={sectionRef} className="relative h-[500vh] bg-foreground" style={{ WebkitOverflowScrolling: 'touch' }}>
       <div ref={pinnedRef} className="sticky top-0 h-screen w-full overflow-hidden">
         {/* Top banner */}
         <div className="absolute top-0 left-0 right-0 z-40 overflow-hidden bg-primary">
