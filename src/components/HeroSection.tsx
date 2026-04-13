@@ -2,10 +2,12 @@ import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useFrameSequence } from "@/hooks/useFrameSequence";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const HeroSection = () => {
+  const isMobile = useIsMobile();
   const sectionRef = useRef<HTMLDivElement>(null);
   const pinnedRef = useRef<HTMLDivElement>(null);
   const mediaRef = useRef<HTMLDivElement>(null);
@@ -38,22 +40,18 @@ const HeroSection = () => {
     const mobile = window.innerWidth < 768;
 
     const ctx = gsap.context(() => {
-      // On mobile, skip blur filters entirely (expensive composite operations)
-      const blurIn = mobile ? "blur(0px)" : "blur(10px)";
-      const blurClear = "blur(0px)";
-
-      gsap.set(contentEls, { y: 40, opacity: 0, ...(mobile ? {} : { filter: blurIn }) });
+      gsap.set(contentEls, { y: 40, opacity: 0, ...(mobile ? {} : { filter: "blur(10px)" }) });
       gsap.set(media, { willChange: "transform, opacity" });
 
-      // Intro
-      const introTl = gsap.timeline({ defaults: { ease: "power3.out" }, delay: 0.3 });
+      // Intro — fast on mobile, cinematic on desktop
+      const introTl = gsap.timeline({ defaults: { ease: "power3.out" }, delay: mobile ? 0.15 : 0.3 });
       introTl
-        .to(badgeRef.current, { y: 0, opacity: 1, ...(mobile ? {} : { filter: blurClear }), duration: 0.5 })
-        .to(headlineRef.current, { y: 0, opacity: 1, ...(mobile ? {} : { filter: blurClear }), duration: 0.6 }, "-=0.3")
-        .to(subtitleRef.current, { y: 0, opacity: 1, ...(mobile ? {} : { filter: blurClear }), duration: 0.5 }, "-=0.25")
-        .to(ctaRef.current, { y: 0, opacity: 1, ...(mobile ? {} : { filter: blurClear }), duration: 0.4 }, "-=0.2")
-        .to(scrollIndicatorRef.current, { y: 0, opacity: 1, duration: 0.4 }, "-=0.15")
-        .to(paginationRef.current, { y: 0, opacity: 1, duration: 0.4 }, "-=0.2");
+        .to(badgeRef.current, { y: 0, opacity: 1, ...(mobile ? {} : { filter: "blur(0px)" }), duration: mobile ? 0.3 : 0.5 })
+        .to(headlineRef.current, { y: 0, opacity: 1, ...(mobile ? {} : { filter: "blur(0px)" }), duration: mobile ? 0.4 : 0.6 }, "-=0.2")
+        .to(subtitleRef.current, { y: 0, opacity: 1, ...(mobile ? {} : { filter: "blur(0px)" }), duration: mobile ? 0.3 : 0.5 }, "-=0.15")
+        .to(ctaRef.current, { y: 0, opacity: 1, ...(mobile ? {} : { filter: "blur(0px)" }), duration: mobile ? 0.25 : 0.4 }, "-=0.1")
+        .to(scrollIndicatorRef.current, { y: 0, opacity: 1, duration: 0.3 }, "-=0.1")
+        .to(paginationRef.current, { y: 0, opacity: 1, duration: 0.3 }, "-=0.1");
 
       // Scroll-driven
       const masterTl = gsap.timeline({
@@ -61,19 +59,19 @@ const HeroSection = () => {
           trigger: section,
           start: "top top",
           end: "bottom bottom",
-          scrub: mobile ? 0.6 : 0.3, // Smoother scrub on mobile
+          scrub: mobile ? 0.4 : 0.3,
           onUpdate: (self) => setProgress(self.progress),
         },
       });
 
-      // On mobile, only animate opacity (no blur, no filter)
       if (mobile) {
-        masterTl.to(badgeRef.current, { y: -30, opacity: 0, ease: "power2.in", duration: 0.15 }, 0);
-        masterTl.to(headlineRef.current, { y: -30, opacity: 0, ease: "power2.in", duration: 0.15 }, 0);
-        masterTl.to(subtitleRef.current, { y: -20, opacity: 0, ease: "power2.in", duration: 0.15 }, 0);
-        masterTl.to(ctaRef.current, { y: -15, opacity: 0, ease: "power2.in", duration: 0.15 }, 0.02);
-        masterTl.to(scrollIndicatorRef.current, { opacity: 0, duration: 0.1 }, 0);
-        masterTl.to(media, { scale: 1.03, opacity: 0.7, ease: "power2.inOut", duration: 0.5 }, 0.5);
+        // Mobile: lightweight opacity-only transitions, GPU-accelerated
+        masterTl.to(badgeRef.current, { y: -20, opacity: 0, ease: "power2.in", duration: 0.12 }, 0);
+        masterTl.to(headlineRef.current, { y: -20, opacity: 0, ease: "power2.in", duration: 0.12 }, 0);
+        masterTl.to(subtitleRef.current, { y: -15, opacity: 0, ease: "power2.in", duration: 0.12 }, 0);
+        masterTl.to(ctaRef.current, { y: -10, opacity: 0, ease: "power2.in", duration: 0.12 }, 0.01);
+        masterTl.to(scrollIndicatorRef.current, { opacity: 0, duration: 0.08 }, 0);
+        masterTl.to(media, { scale: 1.02, opacity: 0.8, ease: "power2.inOut", duration: 0.5 }, 0.5);
       } else {
         masterTl.to(badgeRef.current, { y: -40, opacity: 0, filter: "blur(12px)", ease: "power2.in", duration: 0.15 }, 0);
         masterTl.to(headlineRef.current, { y: -40, opacity: 0, filter: "blur(12px)", ease: "power2.in", duration: 0.15 }, 0);
@@ -89,7 +87,11 @@ const HeroSection = () => {
   }, [setProgress]);
 
   return (
-    <section ref={sectionRef} className="relative h-[500vh] bg-foreground" style={{ WebkitOverflowScrolling: 'touch' }}>
+    <section
+      ref={sectionRef}
+      className="relative h-[250vh] md:h-[500vh]"
+      style={{ WebkitOverflowScrolling: "touch" }}
+    >
       <div ref={pinnedRef} className="sticky top-0 h-screen w-full overflow-hidden">
         {/* Top banner */}
         <div className="absolute top-0 left-0 right-0 z-40 overflow-hidden bg-primary">
@@ -102,7 +104,7 @@ const HeroSection = () => {
           </div>
         </div>
 
-        {/* Background: canvas frames or fallback */}
+        {/* Background: canvas frames or fallback image */}
         <div ref={mediaRef} className="absolute inset-0 origin-center">
           <canvas
             ref={canvasRef}
@@ -117,9 +119,16 @@ const HeroSection = () => {
               className="h-full w-full object-cover"
             />
           )}
-          {/* Gradient overlay - stronger on mobile for readability */}
+          {/* Gradient overlay — lighter on mobile to show product, darker on desktop for text contrast */}
           <div
-            className="absolute inset-0"
+            className="absolute inset-0 md:hidden"
+            style={{
+              background:
+                "linear-gradient(180deg, transparent 0%, hsl(225 30% 8% / 0.25) 30%, hsl(225 30% 8% / 0.55) 70%, hsl(225 30% 8% / 0.7) 100%)",
+            }}
+          />
+          <div
+            className="absolute inset-0 hidden md:block"
             style={{
               background:
                 "linear-gradient(180deg, hsl(225 30% 8% / 0.7) 0%, hsl(225 30% 8% / 0.5) 40%, hsl(225 30% 8% / 0.3) 60%, hsl(225 30% 8% / 0.6) 100%)",
@@ -135,7 +144,7 @@ const HeroSection = () => {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 flex h-full flex-col justify-center items-center text-center px-5 pt-24 pb-16 md:items-start md:text-left md:px-12 md:pt-36 md:pb-24 lg:px-16 xl:px-20">
+        <div className="relative z-10 flex h-full flex-col justify-end pb-20 items-center text-center px-5 md:justify-center md:items-start md:text-left md:px-12 md:pt-36 md:pb-24 lg:px-16 xl:px-20">
           <div className="max-w-2xl">
             {/* Badge */}
             <div ref={badgeRef} className="mb-4 md:mb-6 inline-flex items-center gap-2 rounded-full border border-ocre/30 bg-ocre/10 px-3 py-1.5 md:px-5 md:py-2.5 backdrop-blur-md">
