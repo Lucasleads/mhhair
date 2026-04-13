@@ -95,11 +95,10 @@ const HeroSection = () => {
             style={{ display: loaded ? "block" : "none" }}
           />
           {!loaded && (
-            <div
-              className="h-full w-full"
-              style={{
-                background: "linear-gradient(135deg, hsl(225 30% 12%) 0%, hsl(216 76% 22%) 40%, hsl(206 64% 29%) 70%, hsl(225 30% 12%) 100%)",
-              }}
+            <img
+              src="/hero-frames/frame-001.webp"
+              alt=""
+              className="h-full w-full object-cover"
             />
           )}
           {/* Left gradient overlay for text readability */}
