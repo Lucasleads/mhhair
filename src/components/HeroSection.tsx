@@ -183,6 +183,17 @@ const HeroSection = () => {
                 Escolher Fragrância
               </a>
             </div>
+
+            {/* Scroll indicator - inline */}
+            <div ref={scrollIndicatorRef} className="mt-8 flex flex-col items-center gap-1 md:mt-10">
+              <span className="font-body text-sm font-bold uppercase tracking-[0.25em] text-ocre md:text-base">
+                Descobrir Agora
+              </span>
+              <div className="h-5 w-px animate-pulse bg-ocre/50 md:h-6" />
+              <svg className="w-5 h-5 text-ocre animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
           </div>
         </div>
 
@@ -193,19 +204,6 @@ const HeroSection = () => {
           <span className="font-body text-xs tracking-widest text-foreground/70">01</span>
           <div className="h-12 w-px bg-foreground/20" />
           <span className="font-body text-xs tracking-widest text-foreground/35">04</span>
-        </div>
-
-        <div
-          ref={scrollIndicatorRef}
-          className="absolute bottom-6 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-1 2xl:flex"
-        >
-          <span className="font-body text-xs font-bold uppercase tracking-[0.25em] text-ocre">
-            Descobrir Agora
-          </span>
-          <div className="h-4 w-px animate-pulse bg-ocre/50" />
-          <svg className="w-4 h-4 text-ocre animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-          </svg>
         </div>
       </div>
     </section>
