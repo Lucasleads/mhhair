@@ -44,9 +44,13 @@ const HookVslSection = () => {
     <section ref={sectionRef} className="relative py-20 px-4 md:px-8 bg-background overflow-hidden">
       <div className="max-w-4xl mx-auto text-center">
         {/* Redline */}
-        <p className="hook-animate font-body text-xs uppercase tracking-[0.25em] text-ocre mb-6">
-          O segredo por trás dos ambientes mais sofisticados do Brasil
-        </p>
+        <div className="hook-animate mb-8 flex flex-col items-center gap-3">
+          <div className="h-px w-12 bg-ocre/50" />
+          <p className="font-heading text-base md:text-lg lg:text-xl uppercase tracking-[0.3em] text-ocre font-bold drop-shadow-[0_0_12px_hsl(38_72%_55%/0.5)]">
+            O segredo por trás dos ambientes mais sofisticados do Brasil
+          </p>
+          <div className="h-px w-12 bg-ocre/50" />
+        </div>
 
         <h2 className="hook-animate font-heading text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground leading-tight mb-4 max-w-3xl mx-auto">
           Finalmente: A Tecnologia de Perfumação Profissional que{" "}
