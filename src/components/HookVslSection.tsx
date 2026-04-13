@@ -76,9 +76,12 @@ const HookVslSection = () => {
           <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-br from-ocre via-primary to-ocre opacity-50" />
           <div className="relative rounded-xl overflow-hidden shadow-[0_20px_60px_-12px_hsl(38_72%_55%/0.4)] bg-background">
             <video
+              ref={videoRef}
               className="w-full rounded-xl cursor-pointer"
               controls
-              preload="metadata"
+              muted
+              playsInline
+              preload="auto"
               poster=""
             >
               <source src="/videos/vsl.mp4" type="video/mp4" />
