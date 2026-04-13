@@ -49,6 +49,26 @@ const HookVslSection = () => {
           </video>
         </div>
 
+        {/* Value props */}
+        <div className="hook-animate max-w-2xl mx-auto mb-10">
+          <p className="font-body text-base md:text-lg text-muted-foreground leading-relaxed mb-6">
+            Alta performance, projeção intensa e fragrâncias sofisticadas para transformar qualquer ambiente em uma experiência sensorial marcante.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
+            {[
+              "Alta concentração e rendimento",
+              "Formulação desenvolvida para máquinas de névoa e nanopartículas",
+              "Ideal para marketing olfativo profissional",
+              "Perfuma com perfeição ambientes de pequeno, médio e grande porte",
+            ].map((item) => (
+              <div key={item} className="flex items-start gap-2">
+                <span className="text-success mt-0.5 flex-shrink-0 font-bold">✔</span>
+                <span className="font-body text-sm font-medium text-foreground">{item}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* CTA */}
         <div className="hook-animate flex justify-center">
           <a
