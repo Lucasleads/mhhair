@@ -5,6 +5,7 @@ import NewMechanismSection from "@/components/NewMechanismSection";
 import KitsPricingSection from "@/components/KitsPricingSection";
 import PerformanceSection from "@/components/PerformanceSection";
 import UseCasesSection from "@/components/UseCasesSection";
+import OlfactiveConnectionSection from "@/components/OlfactiveConnectionSection";
 import FaqSection from "@/components/FaqSection";
 import FinalCtaSection from "@/components/FinalCtaSection";
 import Footer from "@/components/Footer";
@@ -19,6 +20,7 @@ const Index = () => {
       <KitsPricingSection />
       <PerformanceSection />
       <UseCasesSection />
+      <OlfactiveConnectionSection />
       <FaqSection />
       <FinalCtaSection />
       <Footer />
