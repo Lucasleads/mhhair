@@ -134,14 +134,14 @@ const HeroSection = () => {
 
             {/* Headline */}
             <div ref={headlineRef} className="mb-4 md:mb-6">
-              <h1 className="font-heading text-3xl font-bold leading-[0.95] tracking-tight sm:text-4xl md:text-[3.5rem] lg:text-6xl xl:text-7xl text-primary-foreground">
+              <h1 className="font-heading text-[2rem] font-bold leading-[0.95] tracking-tight sm:text-4xl md:text-[3.5rem] lg:text-6xl xl:text-7xl text-primary-foreground">
                 A Perfumação de Luxo
                 <br />
                 <span className="text-ocre">que Protege</span> seu
                 <br />
                 Equipamento
               </h1>
-              <p className="mt-2 md:mt-3 font-heading text-lg font-medium leading-tight tracking-tight text-primary-foreground/60 sm:text-xl md:text-3xl lg:text-[2rem]">
+              <p className="mt-2 md:mt-3 font-heading text-base font-medium leading-tight tracking-tight text-primary-foreground/60 sm:text-xl md:text-3xl lg:text-[2rem]">
                 Essências Profissionais
                 <span className="text-ocre-light"> com Nanotecnologia.</span>
               </p>
@@ -150,7 +150,7 @@ const HeroSection = () => {
             {/* Subtitle */}
             <p
               ref={subtitleRef}
-              className="mb-5 md:mb-8 max-w-sm md:max-w-md mx-auto md:mx-0 font-body text-xs md:text-base leading-relaxed text-primary-foreground/70"
+              className="mb-5 md:mb-8 max-w-sm md:max-w-md mx-auto md:mx-0 font-body text-sm md:text-base leading-relaxed text-primary-foreground/70"
             >
               <span className="font-bold text-ocre">Descubra o segredo</span> dos maiores hotéis e clínicas do mundo. Projeção intensa,
               rendimento superior e 180 dias de garantia total.
