@@ -30,23 +30,49 @@ const HookVslSection = () => {
           O segredo por trás dos ambientes mais sofisticados do Brasil
         </p>
 
-        <h2 className="hook-animate font-heading text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground leading-tight mb-10 max-w-3xl mx-auto">
+        <h2 className="hook-animate font-heading text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-foreground leading-tight mb-4 max-w-3xl mx-auto">
           Finalmente: A Tecnologia de Perfumação Profissional que{" "}
           <span className="text-primary">Protege sua Máquina de Mil Reais</span>{" "}
           enquanto Dobra a Percepção de Valor do seu Ambiente.
         </h2>
 
-        {/* VSL Video Embed */}
-        <div className="hook-animate relative mx-auto max-w-3xl mb-10 rounded-xl overflow-hidden shadow-[var(--shadow-card-hover)]">
-          <video
-            className="w-full rounded-xl"
-            controls
-            preload="metadata"
-            poster=""
-          >
-            <source src="/videos/vsl.mp4" type="video/mp4" />
-            Seu navegador não suporta vídeo.
-          </video>
+        {/* Play instruction */}
+        <div className="hook-animate flex items-center justify-center gap-2 mb-6">
+          <span className="relative flex h-3 w-3">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-destructive opacity-75"></span>
+            <span className="relative inline-flex h-3 w-3 rounded-full bg-destructive"></span>
+          </span>
+          <p className="font-body text-sm md:text-base font-semibold text-destructive uppercase tracking-wider">
+            Clique no play e assista agora
+          </p>
+          <span className="relative flex h-3 w-3">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-destructive opacity-75"></span>
+            <span className="relative inline-flex h-3 w-3 rounded-full bg-destructive"></span>
+          </span>
+        </div>
+
+        {/* VSL Video Embed - VTurb style */}
+        <div className="hook-animate relative mx-auto max-w-3xl mb-10 group">
+          {/* Outer glow border */}
+          <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-ocre via-primary to-ocre opacity-70 blur-sm animate-pulse" />
+          <div className="absolute -inset-0.5 rounded-2xl bg-gradient-to-br from-ocre via-primary to-ocre opacity-50" />
+          <div className="relative rounded-xl overflow-hidden shadow-[0_20px_60px_-12px_hsl(38_72%_55%/0.4)] bg-background">
+            <video
+              className="w-full rounded-xl cursor-pointer"
+              controls
+              preload="metadata"
+              poster=""
+            >
+              <source src="/videos/vsl.mp4" type="video/mp4" />
+              Seu navegador não suporta vídeo.
+            </video>
+          </div>
+          {/* Bottom arrow indicator */}
+          <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center">
+            <svg className="w-6 h-6 text-ocre animate-bounce" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
+            </svg>
+          </div>
         </div>
 
         {/* Badge 25 anos */}
