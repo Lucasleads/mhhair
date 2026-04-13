@@ -25,7 +25,7 @@ const RecurrenceToggle = ({ isSubscription, onToggle }: RecurrenceToggleProps) =
           "px-5 py-2.5 rounded-full font-body text-sm font-semibold transition-all duration-300",
           isSubscription
             ? "bg-ocre text-ocre-foreground shadow-lg"
-            : "bg-secondary text-muted-foreground hover:bg-muted"
+            : "bg-muted text-muted-foreground hover:bg-muted/80"
         )}
       >
         Clube de Assinatura
