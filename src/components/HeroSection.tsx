@@ -160,32 +160,53 @@ const HeroSection = () => {
             <div ref={ctaRef} className="flex flex-col sm:flex-row items-center gap-3 md:gap-4">
               <a
                 href="#kits"
-                className="group relative inline-flex w-full sm:w-auto items-center justify-center overflow-hidden rounded-full bg-ocre px-6 py-3 md:px-8 md:py-4 font-body text-[11px] md:text-sm font-bold uppercase tracking-widest text-ocre-foreground transition-all duration-300 hover:scale-105 hover:shadow-[0_8px_30px_-4px_hsl(30_58%_62%/0.5)]"
+                className="group relative inline-flex w-full sm:w-auto items-center justify-center overflow-hidden rounded-full bg-ocre px-6 py-3 md:px-8 md:py-4 font-body text-xs md:text-sm font-bold uppercase tracking-widest text-ocre-foreground transition-all duration-300 hover:scale-105 hover:shadow-[0_8px_30px_-4px_hsl(30_58%_62%/0.5)]"
               >
                 <span className="relative z-10">Assinar e Economizar</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-ocre to-ocre-light opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               </a>
               <a
                 href="#kits"
-                className="inline-flex w-full sm:w-auto items-center justify-center rounded-full border border-primary-foreground/25 px-6 py-3 md:px-8 md:py-4 font-body text-[11px] md:text-sm font-semibold uppercase tracking-widest text-primary-foreground/80 backdrop-blur-sm transition-all duration-300 hover:border-ocre hover:text-ocre hover:bg-ocre/10"
+                className="inline-flex w-full sm:w-auto items-center justify-center rounded-full border border-primary-foreground/25 px-6 py-3 md:px-8 md:py-4 font-body text-xs md:text-sm font-semibold uppercase tracking-widest text-primary-foreground/80 backdrop-blur-sm transition-all duration-300 hover:border-ocre hover:text-ocre hover:bg-ocre/10"
               >
                 Escolher Fragrância
               </a>
             </div>
+
+            {/* Scroll indicator - inline on mobile */}
+            <div
+              ref={scrollIndicatorRef}
+              className="mt-6 flex flex-col items-center gap-1.5 md:hidden"
+            >
+              <span className="font-body text-[11px] font-bold uppercase tracking-[0.25em] text-ocre">
+                Descobrir Agora
+              </span>
+              <div className="flex flex-col items-center gap-0.5">
+                <div className="h-5 w-px bg-gradient-to-b from-ocre/80 to-transparent" />
+                <svg
+                  className="w-4 h-4 text-ocre animate-bounce"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2.5}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </div>
           </div>
 
-          {/* Scroll indicator */}
+          {/* Scroll indicator - absolute on desktop */}
           <div
-            ref={scrollIndicatorRef}
-            className="absolute bottom-5 md:bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 md:gap-2"
+            className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2"
           >
-            <span className="font-body text-[9px] md:text-xs font-bold uppercase tracking-[0.25em] md:tracking-[0.3em] text-ocre">
+            <span className="font-body text-xs font-bold uppercase tracking-[0.3em] text-ocre">
               Descobrir Agora
             </span>
-            <div className="flex flex-col items-center gap-0.5 md:gap-1">
-              <div className="h-4 md:h-8 w-px bg-gradient-to-b from-ocre/80 to-transparent" />
+            <div className="flex flex-col items-center gap-1">
+              <div className="h-8 w-px bg-gradient-to-b from-ocre/80 to-transparent" />
               <svg
-                className="w-3.5 h-3.5 md:w-5 md:h-5 text-ocre animate-bounce"
+                className="w-5 h-5 text-ocre animate-bounce"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
