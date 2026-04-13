@@ -119,4 +119,9 @@
     0%, 100% { transform: rotate(25deg) translateX(-80%); }
     50% { transform: rotate(25deg) translateX(80%); }
   }
+
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-33.333%); }
+  }
 }

@@ -88,6 +88,16 @@ const HeroSection = () => {
   return (
     <section ref={sectionRef} className="relative h-[500vh] bg-background">
       <div ref={pinnedRef} className="sticky top-0 h-screen w-full overflow-hidden bg-background">
+        {/* Top banner */}
+        <div className="absolute top-0 left-0 right-0 z-30 overflow-hidden bg-primary">
+          <div className="flex animate-[marquee_18s_linear_infinite] whitespace-nowrap py-2.5">
+            {[...Array(3)].map((_, i) => (
+              <span key={i} className="mx-8 font-body text-sm font-semibold text-primary-foreground tracking-wide">
+                🚚 Frete Grátis para Todo Brasil &nbsp;•&nbsp; ⚡ Entrega Rápida &nbsp;•&nbsp; 🛡️ Garantia de 180 Dias
+              </span>
+            ))}
+          </div>
+        </div>
         <div ref={mediaRef} className="absolute inset-0 origin-center">
           <canvas
             ref={canvasRef}
