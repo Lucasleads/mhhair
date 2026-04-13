@@ -3,6 +3,7 @@ import HeroSection from "@/components/HeroSection";
 import HookVslSection from "@/components/HookVslSection";
 import NewMechanismSection from "@/components/NewMechanismSection";
 import KitsPricingSection from "@/components/KitsPricingSection";
+import PerformanceSection from "@/components/PerformanceSection";
 import UseCasesSection from "@/components/UseCasesSection";
 import FaqSection from "@/components/FaqSection";
 import FinalCtaSection from "@/components/FinalCtaSection";
@@ -16,6 +17,7 @@ const Index = () => {
       <HookVslSection />
       <NewMechanismSection />
       <KitsPricingSection />
+      <PerformanceSection />
       <UseCasesSection />
       <FaqSection />
       <FinalCtaSection />
