@@ -24,7 +24,7 @@ const Footer = () => (
             <MessageCircle className="w-4 h-4" />
             WhatsApp — Fale Conosco
           </a>
-          <p className="font-body text-xs mt-2">contato@whair.com.br</p>
+          <p className="font-body text-xs mt-2">contato@mhair.com.br</p>
         </div>
 
         {/* Legal */}

@@ -122,7 +122,7 @@ const SocialProofSection = () => {
             <span className="text-ocre">dizem</span>
           </h2>
           <p className="font-body text-muted-foreground max-w-xl mx-auto text-base">
-            Histórias reais de quem transformou seus ambientes com a WHAIR.
+            Histórias reais de quem transformou seus ambientes com a MH AIR.
           </p>
         </div>
 
