@@ -9,7 +9,7 @@ const testimonials = [
   {
     name: "Mariana Souza",
     role: "Proprietária — Hotel Boutique",
-    text: "Desde que começamos a usar a WHAIR, nossos hóspedes elogiam o aroma do lobby. A taxa de retorno aumentou 30% em 3 meses.",
+    text: "Desde que começamos a usar a MH AIR, nossos hóspedes elogiam o aroma do lobby. A taxa de retorno aumentou 30% em 3 meses.",
   },
   {
     name: "Carlos Mendes",
@@ -29,7 +29,7 @@ const testimonials = [
   {
     name: "Juliana Costa",
     role: "Arquiteta de Interiores",
-    text: "Indico a WHAIR para todos os meus projetos de alto padrão. A qualidade é incomparável e o suporte é excepcional.",
+    text: "Indico a MH AIR para todos os meus projetos de alto padrão. A qualidade é incomparável e o suporte é excepcional.",
   },
   {
     name: "André Martins",
@@ -39,12 +39,12 @@ const testimonials = [
   {
     name: "Patrícia Rocha",
     role: "Dona — Spa & Wellness",
-    text: "A nanotecnologia da WHAIR é real. Sem resíduos, sem entupimento. Funciona perfeitamente há mais de 1 ano sem manutenção.",
+    text: "A nanotecnologia da MH AIR é real. Sem resíduos, sem entupimento. Funciona perfeitamente há mais de 1 ano sem manutenção.",
   },
   {
     name: "Lucas Ferreira",
     role: "Proprietário — Restaurante Fine Dining",
-    text: "O aroma complementa a experiência gastronômica. Clientes dizem que nosso restaurante tem 'algo especial'. É a WHAIR.",
+    text: "O aroma complementa a experiência gastronômica. Clientes dizem que nosso restaurante tem 'algo especial'. É a MH AIR.",
   },
 ];
 
@@ -122,7 +122,7 @@ const SocialProofSection = () => {
             <span className="text-ocre">dizem</span>
           </h2>
           <p className="font-body text-muted-foreground max-w-xl mx-auto text-base">
-            Histórias reais de quem transformou seus ambientes com a WHAIR.
+            Histórias reais de quem transformou seus ambientes com a MH AIR.
           </p>
         </div>
 

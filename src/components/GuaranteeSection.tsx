@@ -105,7 +105,7 @@ const GuaranteeSection = () => {
               <img
                 ref={sealRef}
                 src={guaranteeSeal}
-                alt="Selo de Garantia WHAIR"
+                alt="Selo de Garantia MH AIR"
                 loading="lazy"
                 width={1024}
                 height={1024}
