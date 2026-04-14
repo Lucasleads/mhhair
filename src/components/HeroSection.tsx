@@ -190,12 +190,6 @@ const HeroSection = () => {
                 <span className="relative z-10">Assinar e Economizar</span>
                 <div className="absolute inset-0 bg-gradient-to-r from-ocre to-ocre-light opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               </a>
-              <a
-                href="#kits"
-                className="inline-flex w-full sm:w-auto items-center justify-center rounded-full border border-primary-foreground/25 px-6 py-3 md:px-8 md:py-4 font-body text-xs md:text-sm font-semibold uppercase tracking-widest text-primary-foreground/80 backdrop-blur-sm transition-all duration-300 hover:border-ocre hover:text-ocre hover:bg-ocre/10"
-              >
-                Escolher Fragrância
-              </a>
             </div>
 
             {/* Scroll indicator - inline on mobile */}
