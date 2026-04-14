@@ -6,7 +6,7 @@ const Footer = () => (
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
         {/* Brand */}
         <div>
-          <h4 className="font-heading text-xl font-bold text-primary-foreground mb-3">WHAIR</h4>
+          <h4 className="font-heading text-xl font-bold text-primary-foreground mb-3">MH AIR</h4>
           <p className="font-body text-sm leading-relaxed">
             Grupo com 25 anos de Experiência Internacional em Marketing Olfativo e Aromatização Profissional.
           </p>
@@ -40,7 +40,7 @@ const Footer = () => (
 
       <div className="border-t border-primary-foreground/10 pt-6 text-center">
         <p className="font-body text-xs text-primary-foreground/40">
-          © {new Date().getFullYear()} WHAIR — Todos os direitos reservados.
+          © {new Date().getFullYear()} MH AIR — Todos os direitos reservados.
         </p>
       </div>
     </div>

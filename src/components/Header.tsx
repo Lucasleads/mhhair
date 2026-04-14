@@ -30,10 +30,10 @@ const Header = () => {
         {/* Logo */}
         <a href="#" className="flex items-center gap-2 group">
           <span className="w-8 h-8 rounded-full bg-ocre flex items-center justify-center text-ocre-foreground font-heading font-bold text-sm group-hover:scale-110 transition-transform">
-            W
+            M
           </span>
           <span className="font-heading text-xl font-bold text-foreground tracking-tight">
-            W<span className="font-light">HAIR</span>
+            MH<span className="font-light"> AIR</span>
           </span>
         </a>
 
