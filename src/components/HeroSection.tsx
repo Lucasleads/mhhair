@@ -89,7 +89,7 @@ const HeroSection = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative h-[250vh] md:h-[500vh]"
+      className="relative h-[150vh] md:h-[250vh]"
       style={{ WebkitOverflowScrolling: "touch" }}
     >
       <div ref={pinnedRef} className="sticky top-0 h-screen w-full overflow-hidden">
